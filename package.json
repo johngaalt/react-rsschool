@@ -16,6 +16,7 @@
     "src/**/*.{js,jsx,ts,tsx,css,scss,md}": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "eslint-import-resolver-alias": "^1.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -28,7 +29,7 @@
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.28.0",
