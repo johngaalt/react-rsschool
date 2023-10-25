@@ -6,7 +6,7 @@ export default class SearchResults extends React.Component<SearchResultsProps> {
     const { results } = this.props;
     return (
       <div className="search-results">
-        <h1>Search Results</h1>
+        <h1 className="text-3xl font-bold underline">Search Results</h1>
         {results.map((result) => (
           <div key={result.name}>{result.name}</div>
         ))}
