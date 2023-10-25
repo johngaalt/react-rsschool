@@ -1,6 +1,6 @@
 import React from "react";
-import SearchBar from "./SearchBar";
-import SearchResults from "./SearchResults";
+import SearchBar from "./components/SearchBar";
+import SearchResults from "./components/SearchResults";
 
 class App extends React.Component {
   render(): React.ReactNode {
