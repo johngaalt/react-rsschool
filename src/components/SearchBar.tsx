@@ -32,22 +32,26 @@ export default class SearchBar extends React.Component<
   render(): React.ReactNode {
     const { searchTerm } = this.state;
     return (
-      <div className="flex justify-center align-middle">
-        <h1 className="mr-3 text-blue-800 text-3xl text-bold">Star Wars</h1>
-        <input
-          className="search-input"
-          placeholder="Search"
-          type="search"
-          onChange={(e) => this.saveSearchData(e.target.value)}
-          value={searchTerm || ""}
-        />
-        <button
-          className="bg-blue-800 text-white rounded py-2 px-4 flex align-middle justify-center "
-          type="submit"
-          onClick={this.search}
-        >
-          Search
-        </button>
+      <div className="flex justify-center items-center flex-col mb-5">
+        <h1 className="mr-3 text-blue-800 text-3xl text-bold mb-3">
+          Find a person from Star Wars
+        </h1>
+        <div className="flex flex-row">
+          <input
+            className="search-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Search"
+            type="search"
+            onChange={(e) => this.saveSearchData(e.target.value)}
+            value={searchTerm || ""}
+          />
+          <button
+            className="bg-blue-800 text-white rounded py-2 px-4 flex align-middle justify-center "
+            type="submit"
+            onClick={this.search}
+          >
+            Search
+          </button>
+        </div>
       </div>
     );
   }
