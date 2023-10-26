@@ -5,7 +5,7 @@ export default class SearchBar extends React.Component<
   SearchBarProps,
   SearchBarState
 > {
-  constructor(props = {}) {
+  constructor(props: SearchBarProps) {
     super(props);
 
     this.state = {
@@ -17,6 +17,12 @@ export default class SearchBar extends React.Component<
     const searchTerm = localStorage.getItem("searchTerm");
     this.setState({ searchTerm });
   }
+
+  search = (): void => {
+    const { onSearch } = this.props;
+
+    onSearch();
+  };
 
   saveSearchData = (searchTerm: string): void => {
     localStorage.setItem("searchTerm", searchTerm);
@@ -31,13 +37,14 @@ export default class SearchBar extends React.Component<
         <input
           className="search-input"
           placeholder="Search"
-          type="text"
+          type="search"
           onChange={(e) => this.saveSearchData(e.target.value)}
           value={searchTerm || ""}
         />
         <button
           className="bg-blue-800 text-white rounded py-2 px-4 flex align-middle justify-center "
           type="submit"
+          onClick={this.search}
         >
           Search
         </button>

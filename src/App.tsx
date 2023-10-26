@@ -17,17 +17,21 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   async componentDidMount(): Promise<void> {
+    await this.fetchPeople();
+  }
+
+  fetchPeople = async () => {
     const searchTerm = localStorage.getItem("searchTerm");
     const response = await this.service.getAll(searchTerm);
     this.setState({ people: response });
-  }
+  };
 
   render(): React.ReactNode {
     const { people } = this.state;
     return (
       <div className="bg-orange-100 h-screen">
         <div className="App container mx-auto">
-          <SearchBar />
+          <SearchBar onSearch={this.fetchPeople} />
           <SearchResults results={people} />
         </div>
       </div>
