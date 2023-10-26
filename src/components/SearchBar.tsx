@@ -45,7 +45,7 @@ export default class SearchBar extends React.Component<
             value={searchTerm || ""}
           />
           <button
-            className="bg-blue-800 text-white rounded py-2 px-4 flex align-middle justify-center "
+            className="bg-blue-800 text-white rounded py-1 px-4 flex items-center justify-center "
             type="submit"
             onClick={this.search}
           >

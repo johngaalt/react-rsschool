@@ -13,6 +13,7 @@ class App extends React.Component<AppProps, AppState> {
     this.service = new StarWarsService();
     this.state = {
       people: [],
+      currentPage: 1,
     };
   }
 
@@ -20,9 +21,21 @@ class App extends React.Component<AppProps, AppState> {
     await this.fetchPeople();
   }
 
-  fetchPeople = async () => {
+  fetchNextPage = async () => {
+    const { currentPage } = this.state;
+    this.setState({ currentPage: currentPage + 1 });
+    await this.fetchPeople(currentPage + 1);
+  };
+
+  fetchPreviousPage = async () => {
+    const { currentPage } = this.state;
+    this.setState({ currentPage: currentPage - 1 });
+    await this.fetchPeople(currentPage - 1);
+  };
+
+  fetchPeople = async (page?: number) => {
     const searchTerm = localStorage.getItem("searchTerm");
-    const response = await this.service.getAll(searchTerm);
+    const response = await this.service.getAll(searchTerm, page);
     this.setState({ people: response });
   };
 
@@ -32,7 +45,11 @@ class App extends React.Component<AppProps, AppState> {
       <div className="bg-orange-100 h-screen">
         <div className="App container mx-auto">
           <SearchBar onSearch={this.fetchPeople} />
-          <SearchResults results={people} />
+          <SearchResults
+            onNextPage={this.fetchNextPage}
+            onPreviousPage={this.fetchPreviousPage}
+            results={people}
+          />
         </div>
       </div>
     );

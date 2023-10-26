@@ -4,4 +4,5 @@ export interface AppProps {}
 
 export interface AppState {
   people: Character[];
+  currentPage: number;
 }

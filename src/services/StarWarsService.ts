@@ -3,11 +3,18 @@ import { Character } from "./StarWarsService.types";
 export default class StarWarsService {
   host = "https://swapi.dev/api";
 
-  async getAll(searchTerm?: string | null): Promise<Character[]> {
+  async getAll(
+    searchTerm?: string | null,
+    page?: number,
+  ): Promise<Character[]> {
     let url = `${this.host}/people`;
 
     if (searchTerm) {
       url += `/?search=${searchTerm}`;
+    }
+
+    if (page) {
+      url += `/?page=${page}`;
     }
 
     const response = await fetch(url);
