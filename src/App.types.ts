@@ -7,4 +7,5 @@ export interface AppState {
   currentPage: number;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
+  isLoading: boolean;
 }

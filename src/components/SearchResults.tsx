@@ -16,7 +16,7 @@ export default class SearchResults extends React.Component<SearchResultsProps> {
     const buttonPreviousClass = hasPreviousPage ? "bg-blue-800" : "bg-gray-300";
 
     return (
-      <div className="flex flex-col justify-center items-center ">
+      <div className="flex flex-col justify-center items-center">
         <div className="flex flex-row">
           <h1 className="text-3xl font-bold mr-3">Search Results</h1>
           <button

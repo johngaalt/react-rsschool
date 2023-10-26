@@ -16,6 +16,7 @@ class App extends React.Component<AppProps, AppState> {
       currentPage: 1,
       hasNextPage: false,
       hasPreviousPage: false,
+      isLoading: false,
     };
   }
 
@@ -36,9 +37,11 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   fetchPeople = async (page?: number) => {
+    this.setState({ isLoading: true });
     const searchTerm = localStorage.getItem("searchTerm");
     const response = await this.service.getAll(searchTerm, page);
     this.setState({
+      isLoading: false,
       people: response.results,
       hasNextPage: !!response.next,
       hasPreviousPage: !!response.previous,
@@ -46,18 +49,24 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   render(): React.ReactNode {
-    const { people, hasNextPage, hasPreviousPage } = this.state;
+    const { people, hasNextPage, hasPreviousPage, isLoading } = this.state;
     return (
       <div className="bg-orange-100 h-screen">
         <div className="App container mx-auto">
           <SearchBar onSearch={this.fetchPeople} />
-          <SearchResults
-            onNextPage={this.fetchNextPage}
-            onPreviousPage={this.fetchPreviousPage}
-            results={people}
-            hasNextPage={hasNextPage}
-            hasPreviousPage={hasPreviousPage}
-          />
+          {isLoading ? (
+            <div className="flex justify-center items-center animate-pulse">
+              Loading...
+            </div>
+          ) : (
+            <SearchResults
+              onNextPage={this.fetchNextPage}
+              onPreviousPage={this.fetchPreviousPage}
+              results={people}
+              hasNextPage={hasNextPage}
+              hasPreviousPage={hasPreviousPage}
+            />
+          )}
         </div>
       </div>
     );
