@@ -17,7 +17,8 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   async componentDidMount(): Promise<void> {
-    const response = await this.service.getAll();
+    const searchTerm = localStorage.getItem("searchTerm");
+    const response = await this.service.getAll(searchTerm);
     this.setState({ people: response });
   }
 

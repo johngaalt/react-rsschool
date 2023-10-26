@@ -1,5 +1,5 @@
 export interface SearchBarProps {
-  onSearch: () => void;
+  // onSearch: () => void;
 }
 
 export interface SearchBarState {
