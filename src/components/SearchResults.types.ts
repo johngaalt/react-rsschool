@@ -4,4 +4,6 @@ export interface SearchResultsProps {
   results: Character[];
   onNextPage: () => void;
   onPreviousPage: () => void;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
 }

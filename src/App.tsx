@@ -14,6 +14,8 @@ class App extends React.Component<AppProps, AppState> {
     this.state = {
       people: [],
       currentPage: 1,
+      hasNextPage: false,
+      hasPreviousPage: false,
     };
   }
 
@@ -36,11 +38,15 @@ class App extends React.Component<AppProps, AppState> {
   fetchPeople = async (page?: number) => {
     const searchTerm = localStorage.getItem("searchTerm");
     const response = await this.service.getAll(searchTerm, page);
-    this.setState({ people: response.results });
+    this.setState({
+      people: response.results,
+      hasNextPage: !!response.next,
+      hasPreviousPage: !!response.previous,
+    });
   };
 
   render(): React.ReactNode {
-    const { people } = this.state;
+    const { people, hasNextPage, hasPreviousPage } = this.state;
     return (
       <div className="bg-orange-100 h-screen">
         <div className="App container mx-auto">
@@ -49,6 +55,8 @@ class App extends React.Component<AppProps, AppState> {
             onNextPage={this.fetchNextPage}
             onPreviousPage={this.fetchPreviousPage}
             results={people}
+            hasNextPage={hasNextPage}
+            hasPreviousPage={hasPreviousPage}
           />
         </div>
       </div>
