@@ -36,7 +36,7 @@ class App extends React.Component<AppProps, AppState> {
   fetchPeople = async (page?: number) => {
     const searchTerm = localStorage.getItem("searchTerm");
     const response = await this.service.getAll(searchTerm, page);
-    this.setState({ people: response });
+    this.setState({ people: response.results });
   };
 
   render(): React.ReactNode {

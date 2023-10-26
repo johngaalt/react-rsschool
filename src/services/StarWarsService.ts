@@ -1,4 +1,4 @@
-import { Character } from "./StarWarsService.types";
+import { ApiResponse, Character } from "./StarWarsService.types";
 
 export default class StarWarsService {
   host = "https://swapi.dev/api";
@@ -6,7 +6,7 @@ export default class StarWarsService {
   async getAll(
     searchTerm?: string | null,
     page?: number,
-  ): Promise<Character[]> {
+  ): Promise<ApiResponse<Character[]>> {
     let url = `${this.host}/people`;
 
     if (searchTerm) {
@@ -19,6 +19,7 @@ export default class StarWarsService {
 
     const response = await fetch(url);
     const data = await response.json();
-    return data.results;
+
+    return data;
   }
 }
