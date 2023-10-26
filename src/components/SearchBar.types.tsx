@@ -3,5 +3,5 @@ export interface SearchBarProps {
 }
 
 export interface SearchBarState {
-  searchTerm: string;
+  searchTerm?: string | null;
 }
