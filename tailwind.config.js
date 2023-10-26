@@ -3,7 +3,7 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
-      sm: "640px",
+      sm: "380px",
       // => @media (min-width: 640px) { ... }
 
       md: "768px",
@@ -14,9 +14,6 @@ export default {
 
       xl: "1280px",
       // => @media (min-width: 1280px) { ... }
-
-      "2xl": "1536px",
-      // => @media (min-width: 1536px) { ... }
     },
     container: {
       center: true,

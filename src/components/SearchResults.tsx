@@ -5,8 +5,8 @@ export default class SearchResults extends React.Component<SearchResultsProps> {
   render(): React.ReactNode {
     const { results } = this.props;
     return (
-      <div className="search-results">
-        <h1 className="text-3xl font-bold underline">Search Results</h1>
+      <div className="flex flex-col justify-center align-middle">
+        <h1 className="text-3xl font-bold">Search Results</h1>
         {results.map((result) => (
           <div key={result.name}>{result.name}</div>
         ))}

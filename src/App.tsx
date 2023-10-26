@@ -24,9 +24,11 @@ class App extends React.Component<AppProps, AppState> {
   render(): React.ReactNode {
     const { people } = this.state;
     return (
-      <div className="App container mx-auto">
-        <SearchBar />
-        <SearchResults results={people} />
+      <div className="bg-orange-100 h-screen">
+        <div className="App container mx-auto">
+          <SearchBar />
+          <SearchResults results={people} />
+        </div>
       </div>
     );
   }
