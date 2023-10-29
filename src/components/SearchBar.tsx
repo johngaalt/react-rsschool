@@ -33,7 +33,7 @@ export default class SearchBar extends React.Component<
     const { searchTerm } = this.state;
     return (
       <div className="flex justify-center items-center flex-col mb-5">
-        <h1 className="mr-3 text-blue-800 text-3xl text-bold mb-3">
+        <h1 className="mr-3  text-3xl text-bold mb-3">
           Find a person from Star Wars
         </h1>
         <div className="flex flex-row">
