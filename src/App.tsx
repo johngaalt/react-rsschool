@@ -3,6 +3,8 @@ import SearchBar from "./components/SearchBar";
 import SearchResults from "./components/SearchResults";
 import { AppProps, AppState } from "./App.types";
 import StarWarsService from "./services/StarWarsService";
+import ErrorBoundary from "./components/ErrorBoundary";
+import ErrorButton from "./components/ErrorButton";
 
 class App extends React.Component<AppProps, AppState> {
   service: StarWarsService;
@@ -52,22 +54,25 @@ class App extends React.Component<AppProps, AppState> {
     const { people, hasNextPage, hasPreviousPage, isLoading } = this.state;
     return (
       <div className="bg-orange-100 h-screen">
-        <div className="App container mx-auto">
-          <SearchBar onSearch={this.fetchPeople} />
-          {isLoading ? (
-            <div className="flex justify-center items-center animate-pulse">
-              Loading...
-            </div>
-          ) : (
-            <SearchResults
-              onNextPage={this.fetchNextPage}
-              onPreviousPage={this.fetchPreviousPage}
-              results={people}
-              hasNextPage={hasNextPage}
-              hasPreviousPage={hasPreviousPage}
-            />
-          )}
-        </div>
+        <ErrorBoundary>
+          <div className="App container mx-auto">
+            <ErrorButton />
+            <SearchBar onSearch={this.fetchPeople} />
+            {isLoading ? (
+              <div className="flex justify-center items-center animate-pulse">
+                Loading...
+              </div>
+            ) : (
+              <SearchResults
+                onNextPage={this.fetchNextPage}
+                onPreviousPage={this.fetchPreviousPage}
+                results={people}
+                hasNextPage={hasNextPage}
+                hasPreviousPage={hasPreviousPage}
+              />
+            )}
+          </div>
+        </ErrorBoundary>
       </div>
     );
   }
