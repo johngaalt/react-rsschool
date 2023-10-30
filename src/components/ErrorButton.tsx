@@ -23,7 +23,7 @@ export default class ErrorButton extends React.Component<
     }
     return (
       <button
-        className="bg-blue-800 text-white rounded py-1 px-4 flex items-center justify-center "
+        className="bg-blue-800 text-white rounded py-1 px-4 flex items-center justify-center self-center"
         type="submit"
         onClick={this.showError}
       >

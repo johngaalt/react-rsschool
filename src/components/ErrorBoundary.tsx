@@ -22,7 +22,11 @@ export default class ErrorBoundary extends React.Component<
     const { children } = this.props;
 
     if (hasError) {
-      return <h1>Something went wrong.</h1>;
+      return (
+        <h1 className="text-red-500 text-center font-bold text-3xl">
+          Something went wrong.
+        </h1>
+      );
     }
     return children;
   }
