@@ -1,81 +1,67 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import SearchBar from "./components/SearchBar";
 import SearchResults from "./components/SearchResults";
-import { AppProps, AppState } from "./App.types";
 import StarWarsService from "./services/StarWarsService";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorButton from "./components/ErrorButton";
+import { Character } from "./services/StarWarsService.types";
 
-class App extends React.Component<AppProps, AppState> {
-  service: StarWarsService;
+function App(): React.ReactElement {
+  const [people, setPeople] = useState<Character[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(false);
+  const [hasPreviousPage, setHasPreviousPage] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  constructor(props = {}) {
-    super(props);
+  const fetchPeople = useCallback(async (page?: number) => {
+    const service = new StarWarsService();
 
-    this.service = new StarWarsService();
-    this.state = {
-      people: [],
-      currentPage: 1,
-      hasNextPage: false,
-      hasPreviousPage: false,
-      isLoading: false,
-    };
-  }
-
-  async componentDidMount(): Promise<void> {
-    await this.fetchPeople();
-  }
-
-  fetchNextPage = async () => {
-    const { currentPage } = this.state;
-    this.setState({ currentPage: currentPage + 1 });
-    await this.fetchPeople(currentPage + 1);
-  };
-
-  fetchPreviousPage = async () => {
-    const { currentPage } = this.state;
-    this.setState({ currentPage: currentPage - 1 });
-    await this.fetchPeople(currentPage - 1);
-  };
-
-  fetchPeople = async (page?: number) => {
-    this.setState({ isLoading: true });
+    setIsLoading(true);
     const searchTerm = localStorage.getItem("searchTerm");
-    const response = await this.service.getAll(searchTerm, page);
-    this.setState({
-      isLoading: false,
-      people: response.results,
-      hasNextPage: !!response.next,
-      hasPreviousPage: !!response.previous,
-    });
+    const response = await service.getAll(searchTerm, page);
+    setIsLoading(false);
+    setPeople(response.results);
+    setHasNextPage(!!response.next);
+    setHasPreviousPage(!!response.previous);
+  }, []);
+
+  const fetchNextPage = async () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+    await fetchPeople(currentPage + 1);
   };
 
-  render(): React.ReactNode {
-    const { people, hasNextPage, hasPreviousPage, isLoading } = this.state;
-    return (
-      <div className="bg-orange-100 h-screen">
-        <ErrorBoundary>
-          <div className="App container mx-auto">
-            <ErrorButton />
-            <SearchBar onSearch={this.fetchPeople} />
-            {isLoading ? (
-              <div className="flex justify-center items-center animate-pulse">
-                Loading...
-              </div>
-            ) : (
-              <SearchResults
-                onNextPage={this.fetchNextPage}
-                onPreviousPage={this.fetchPreviousPage}
-                results={people}
-                hasNextPage={hasNextPage}
-                hasPreviousPage={hasPreviousPage}
-              />
-            )}
-          </div>
-        </ErrorBoundary>
-      </div>
-    );
-  }
+  const fetchPreviousPage = async () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+    await fetchPeople(currentPage - 1);
+  };
+
+  useEffect(() => {
+    fetchPeople(currentPage);
+  }, [currentPage, fetchPeople]);
+
+  return (
+    <div className="bg-orange-100 h-screen">
+      <ErrorBoundary>
+        <div className="App container mx-auto">
+          <ErrorButton />
+          <SearchBar onSearch={fetchPeople} />
+          {isLoading ? (
+            <div className="flex justify-center items-center animate-pulse">
+              Loading...
+            </div>
+          ) : (
+            <SearchResults
+              onNextPage={fetchNextPage}
+              onPreviousPage={fetchPreviousPage}
+              results={people}
+              hasNextPage={hasNextPage}
+              hasPreviousPage={hasPreviousPage}
+            />
+          )}
+        </div>
+      </ErrorBoundary>
+    </div>
+  );
 }
 
 export default App;
