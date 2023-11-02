@@ -12,7 +12,7 @@ export default function ErrorButton() {
   }
   return (
     <button
-      className="bg-blue-800 text-white rounded py-1 px-4 flex items-center justify-center self-center"
+      className="bg-blue-800 text-white rounded py-1 px-4 flex items-center justify-center"
       type="submit"
       onClick={handleShowError}
     >

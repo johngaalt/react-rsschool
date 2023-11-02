@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { SearchResultsProps } from "./SearchResults.types";
 
 export default function SearchResults({
@@ -33,13 +34,19 @@ export default function SearchResults({
           Next Page
         </button>
       </div>
-      {results.map((result) => (
-        <div className="flex mb-4 justify-between gap-3" key={result.name}>
-          <h4 className="text-xl text-left font-bold">{result.name}</h4>
-          <div>birth year: {result.birth_year}</div>
-          <div>eye color: {result.eye_color}</div>
-        </div>
-      ))}
+      {results.map((result) => {
+        const id = result.url.split("/").at(-2);
+        return (
+          <div className="flex mb-4 justify-between gap-3" key={result.name}>
+            <Link
+              to={`/character/${id}}`}
+              className="text-xl text-left font-bold"
+            >
+              {result.name}
+            </Link>
+          </div>
+        );
+      })}
     </div>
   );
 }
