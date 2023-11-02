@@ -59,7 +59,7 @@ function App(): React.ReactElement {
               />
             )}
           </div>
-          <div className="flex w-2/3">
+          <div className="flex justify-center items-center w-2/3">
             <Router />
           </div>
         </div>

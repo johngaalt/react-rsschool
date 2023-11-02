@@ -22,6 +22,14 @@ const getAll = async (
   return data;
 };
 
+const getById = async (id: string): Promise<Character> => {
+  const response = await fetch(`${host}/people/${id}`);
+  const data = await response.json();
+
+  return data;
+};
+
 export default {
   getAll,
+  getById,
 };

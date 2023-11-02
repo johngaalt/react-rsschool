@@ -39,8 +39,8 @@ export default function SearchResults({
         return (
           <div className="flex mb-4 justify-between gap-3" key={result.name}>
             <Link
-              to={`/character/${id}}`}
-              className="text-xl text-left font-bold"
+              to={`/character/${id}`}
+              className="text-xl text-left font-bold hover:text-blue-400"
             >
               {result.name}
             </Link>
