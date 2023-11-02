@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import SearchBar from "./components/SearchBar";
 import SearchResults from "./components/SearchResults";
-import service from "./services/StarWarsService";
+import StarWarsService from "./services/StarWarsService";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorButton from "./components/ErrorButton";
 import { Character } from "./services/StarWarsService.types";
@@ -16,7 +16,7 @@ function App(): React.ReactElement {
   const fetchPeople = useCallback(async (page?: number) => {
     setIsLoading(true);
     const searchTerm = localStorage.getItem("searchTerm");
-    const response = await service.getAll(searchTerm, page);
+    const response = await StarWarsService.getAll(searchTerm, page);
     setIsLoading(false);
     setPeople(response.results);
     setHasNextPage(!!response.next);
