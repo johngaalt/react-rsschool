@@ -5,6 +5,7 @@ import StarWarsService from "./services/StarWarsService";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ErrorButton from "./components/ErrorButton";
 import { Character } from "./services/StarWarsService.types";
+import Router from "./components/Router";
 
 function App(): React.ReactElement {
   const [people, setPeople] = useState<Character[]>([]);
@@ -38,24 +39,29 @@ function App(): React.ReactElement {
   }, [currentPage, fetchPeople]);
 
   return (
-    <div className="bg-orange-100 h-screen">
+    <div className="bg-orange-100 h-screen ">
       <ErrorBoundary>
-        <div className="App container mx-auto">
-          <ErrorButton />
-          <SearchBar onSearch={fetchPeople} />
-          {isLoading ? (
-            <div className="flex justify-center items-center animate-pulse">
-              Loading...
-            </div>
-          ) : (
-            <SearchResults
-              onNextPage={fetchNextPage}
-              onPreviousPage={fetchPreviousPage}
-              results={people}
-              hasNextPage={hasNextPage}
-              hasPreviousPage={hasPreviousPage}
-            />
-          )}
+        <div className="App container flex flex-row justify-between items-center gap-2  ">
+          <div className="flex flex-col w-1/3">
+            <ErrorButton />
+            <SearchBar onSearch={fetchPeople} />
+            {isLoading ? (
+              <div className="flex justify-center items-center animate-pulse">
+                Loading...
+              </div>
+            ) : (
+              <SearchResults
+                onNextPage={fetchNextPage}
+                onPreviousPage={fetchPreviousPage}
+                results={people}
+                hasNextPage={hasNextPage}
+                hasPreviousPage={hasPreviousPage}
+              />
+            )}
+          </div>
+          <div className="flex w-2/3">
+            <Router />
+          </div>
         </div>
       </ErrorBoundary>
     </div>
