@@ -9,9 +9,9 @@ export default function SearchResults({
   onNextPage,
   onPreviousPage,
 }: SearchResultsProps): React.ReactElement {
-  const buttonNextClass = hasNextPage ? "bg-blue-800" : "bg-gray-300";
+  const buttonNextClass = hasNextPage ? "bg-white" : "bg-gray-300";
 
-  const buttonPreviousClass = hasPreviousPage ? "bg-blue-800" : "bg-gray-300";
+  const buttonPreviousClass = hasPreviousPage ? "bg-white" : "bg-gray-300";
 
   return (
     <div className="flex flex-col justify-center items-start ">
@@ -19,7 +19,7 @@ export default function SearchResults({
         <h1 className="text-3xl font-bold mr-3 ">Search Results</h1>
         <button
           disabled={!hasPreviousPage}
-          className={`flex justify-center items-center py-1 px-2 mr-3  ${buttonPreviousClass} text-white rounded`}
+          className={`flex justify-center items-center py-1 px-2 mr-3  ${buttonPreviousClass} text-orange-500 rounded-md hover:text-blue-500 shadow-md hover:shadow-lg`}
           type="button"
           onClick={onPreviousPage}
         >
@@ -27,7 +27,7 @@ export default function SearchResults({
         </button>
         <button
           disabled={!hasNextPage}
-          className={`flex justify-center items-center py-1 px-2 ${buttonNextClass} text-white rounded`}
+          className={`flex justify-center items-center py-1 px-2 ${buttonNextClass} text-orange-500 rounded-md hover:text-blue-500 shadow-md hover:shadow-lg`}
           type="button"
           onClick={onNextPage}
         >

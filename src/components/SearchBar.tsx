@@ -35,7 +35,7 @@ export default function SearchBar({
           value={searchTerm || ""}
         />
         <button
-          className="bg-white text-orange-500 rounded py-1 px-4 flex items-center justify-center border border-gray-500 hover:border-gray-600 "
+          className="bg-white text-orange-500 rounded-md py-1 px-4 flex items-center justify-center hover:text-blue-500 shadow-md hover:shadow-lg"
           type="submit"
           onClick={handleSearch}
         >

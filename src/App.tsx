@@ -39,7 +39,7 @@ function App(): React.ReactElement {
   }, [currentPage, fetchPeople]);
 
   return (
-    <div className="bg-orange-100 h-screen ">
+    <div className="bg-gray-100 h-screen ">
       <ErrorBoundary>
         <div className="App container flex flex-row justify-between items-center gap-2  ">
           <div className="flex flex-col w-1/3">
