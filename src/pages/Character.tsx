@@ -6,12 +6,15 @@ import { Character as CharacterType } from "../services/StarWarsService.types";
 export default function Character() {
   const { id } = useParams();
   const [character, setCharacter] = useState<CharacterType>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchCharacter() {
       if (id) {
+        setIsLoading(true);
         const response = await StarWarsService.getById(id);
         setCharacter(response);
+        setIsLoading(false);
       }
     }
     fetchCharacter();
@@ -24,12 +27,18 @@ export default function Character() {
           Star Wars Universe
         </h1>
       </div>
-      <div className="flex flex-col justify-between items-center border border-orange-500 gap-5 p-5 rounded-lg ">
-        <h2 className="text-3xl font-bold"> {character?.name}</h2>
-        <p className="text-2xl">birth year: {character?.birth_year}</p>
-        <p className="text-2xl">eye color: {character?.eye_color}</p>
-        <p className="text-2xl">hair color: {character?.hair_color}</p>
-      </div>
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          <span className="visually-hidden animate-pulse">Loading...</span>
+        </div>
+      ) : (
+        <div className="flex flex-col justify-between items-center border border-orange-500 gap-5 p-5 rounded-lg ">
+          <h2 className="text-3xl font-bold"> {character?.name}</h2>
+          <p className="text-2xl">birth year: {character?.birth_year}</p>
+          <p className="text-2xl">eye color: {character?.eye_color}</p>
+          <p className="text-2xl">hair color: {character?.hair_color}</p>
+        </div>
+      )}
     </div>
   );
 }
