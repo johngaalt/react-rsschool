@@ -1,7 +1,9 @@
+import logo from "../assets/logo.svg";
+
 export default function Home() {
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="w-full h-full">
+      <img src={logo} alt="star wars" className=" object-cover" />
     </div>
   );
 }

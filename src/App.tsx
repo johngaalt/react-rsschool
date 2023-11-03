@@ -41,7 +41,7 @@ function App(): React.ReactElement {
   return (
     <div className="bg-gray-100 h-screen ">
       <ErrorBoundary>
-        <div className="App container flex flex-row justify-between items-center gap-2  ">
+        <div className="w-full h-full App container flex flex-row justify-between items-center gap-2  ">
           <div className="flex flex-col w-1/3">
             <ErrorButton />
             <SearchBar onSearch={fetchPeople} />

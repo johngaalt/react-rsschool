@@ -23,7 +23,7 @@ export default function SearchResults({
           type="button"
           onClick={onPreviousPage}
         >
-          Previous Page
+          Prev
         </button>
         <button
           disabled={!hasNextPage}
@@ -31,7 +31,7 @@ export default function SearchResults({
           type="button"
           onClick={onNextPage}
         >
-          Next Page
+          Next
         </button>
       </div>
       {results.map((result) => {

@@ -25,11 +25,11 @@ export default function SearchBar({
 
   return (
     <div className="flex  flex-col mb-5 ">
-      <h1 className="mr-3  text-3xl text-bold mb-3">Find a person</h1>
+      <div className="mr-3  mb-3" />
       <div className="flex flex-row">
         <input
           className="search-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          placeholder="Search"
+          placeholder="Type person's name"
           type="search"
           onChange={(e) => saveSearchData(e.target.value)}
           value={searchTerm || ""}

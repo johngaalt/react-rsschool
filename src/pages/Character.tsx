@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import StarWarsService from "../services/StarWarsService";
 import { Character as CharacterType } from "../services/StarWarsService.types";
-import cross from "../assets/cross.svg";
+import cross from "../assets/cross-1.svg";
 
 export default function Character() {
   const { id } = useParams();
@@ -42,7 +42,7 @@ export default function Character() {
             alt="cross"
             width={30}
             height={30}
-            className="text-orange-500"
+            className="text-orange-500 hover:scale-125 transition duration-300 ease-in-out"
           />
         </button>
       </div>
