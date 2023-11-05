@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import StarWarsService from "../services/StarWarsService";
 import { Character as CharacterType } from "../services/StarWarsService.types";
 import cross from "../assets/cross-1.svg";
+import { Paths } from "../components/Router.types";
 
 export default function Character() {
   const { id } = useParams();
@@ -11,7 +12,7 @@ export default function Character() {
   const navigate = useNavigate();
 
   const closeCharacterSection = () => {
-    navigate("/");
+    navigate(Paths.Home);
   };
 
   useEffect(() => {

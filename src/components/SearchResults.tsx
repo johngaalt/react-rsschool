@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { SearchResultsProps } from "./SearchResults.types";
+import { Paths } from "./Router.types";
 
 export default function SearchResults({
   hasNextPage,
@@ -39,7 +40,7 @@ export default function SearchResults({
         return (
           <div className="flex mb-4 justify-between gap-3" key={result.name}>
             <Link
-              to={`/character/${id}`}
+              to={`${Paths.Details}/${id}`}
               className="text-xl text-left font-bold hover:text-blue-400"
             >
               {result.name}

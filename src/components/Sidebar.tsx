@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import StarWarsService from "../services/StarWarsService";
 import { Character } from "../services/StarWarsService.types";

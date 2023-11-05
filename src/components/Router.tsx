@@ -3,15 +3,16 @@ import Home from "../pages/Home";
 import Character from "../pages/Character";
 import NotFound from "../pages/NotFound";
 import Sidebar from "./Sidebar";
+import { Paths } from "./Router.types";
 
 export default function Router() {
   return (
     <Routes>
-      <Route path="/" element={<Sidebar />}>
+      <Route path={Paths.Home} element={<Sidebar />}>
         <Route index element={<Home />} />
-        <Route path="/character/:id" element={<Character />} />
+        <Route path={`${Paths.Details}/:id`} element={<Character />} />
       </Route>
-      <Route path="*" element={<NotFound />} />
+      <Route path={Paths.NotFound} element={<NotFound />} />
     </Routes>
   );
 }
