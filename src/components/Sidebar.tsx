@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { Outlet, useSearchParams } from "react-router-dom";
 import StarWarsService from "../services/StarWarsService";
-import { Character } from "../services/StarWarsService.types";
+import { Details } from "../services/StarWarsService.types";
 import ErrorButton from "./ErrorButton";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 
 export default function Sidebar() {
-  const [people, setPeople] = useState<Character[]>([]);
+  const [people, setPeople] = useState<Details[]>([]);
   const [hasNextPage, setHasNextPage] = useState<boolean>(false);
   const [hasPreviousPage, setHasPreviousPage] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);

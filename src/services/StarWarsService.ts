@@ -1,11 +1,11 @@
-import { ApiResponse, Character } from "./StarWarsService.types";
+import { ApiResponse, Details } from "./StarWarsService.types";
 
 const host = "https://swapi.dev/api";
 
 const getAll = async (
   searchTerm?: string | null,
   page?: number,
-): Promise<ApiResponse<Character[]>> => {
+): Promise<ApiResponse<Details[]>> => {
   let url = `${host}/people`;
 
   if (searchTerm) {
@@ -22,7 +22,7 @@ const getAll = async (
   return data;
 };
 
-const getById = async (id: string): Promise<Character> => {
+const getById = async (id: string): Promise<Details> => {
   const response = await fetch(`${host}/people/${id}`);
   const data = await response.json();
 

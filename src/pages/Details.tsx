@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import StarWarsService from "../services/StarWarsService";
-import { Character as CharacterType } from "../services/StarWarsService.types";
+import { Details as DetailsType } from "../services/StarWarsService.types";
 import cross from "../assets/cross-1.svg";
 import { Paths } from "../components/Router.types";
 
 export default function Details() {
   const { id } = useParams();
-  const [character, setDetails] = useState<CharacterType>();
+  const [details, setDetails] = useState<DetailsType>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -53,10 +53,10 @@ export default function Details() {
         </div>
       ) : (
         <div className="flex flex-col justify-between items-center border border-orange-500 gap-5 p-5 rounded-lg ">
-          <h2 className="text-3xl font-bold"> {character?.name}</h2>
-          <p className="text-2xl">birth year: {character?.birth_year}</p>
-          <p className="text-2xl">eye color: {character?.eye_color}</p>
-          <p className="text-2xl">hair color: {character?.hair_color}</p>
+          <h2 className="text-3xl font-bold"> {details?.name}</h2>
+          <p className="text-2xl">birth year: {details?.birth_year}</p>
+          <p className="text-2xl">eye color: {details?.eye_color}</p>
+          <p className="text-2xl">hair color: {details?.hair_color}</p>
         </div>
       )}
     </div>

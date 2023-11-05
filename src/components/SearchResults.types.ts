@@ -1,7 +1,7 @@
-import { Character } from "../services/StarWarsService.types";
+import { Details } from "../services/StarWarsService.types";
 
 export interface SearchResultsProps {
-  results: Character[];
+  results: Details[];
   onNextPage: () => void;
   onPreviousPage: () => void;
   hasNextPage: boolean;
