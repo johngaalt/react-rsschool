@@ -10,7 +10,7 @@ export default function Character() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const closeRightSection = () => {
+  const closeCharacterSection = () => {
     navigate("/");
   };
 
@@ -33,7 +33,7 @@ export default function Character() {
           Star Wars Universe
         </h1>
         <button
-          onClick={closeRightSection}
+          onClick={closeCharacterSection}
           className="cursor-pointer "
           type="button"
         >
