@@ -7,6 +7,7 @@ export default function SearchResults({
   hasNextPage,
   hasPreviousPage,
   results,
+  searchParam,
   onNextPage,
   onPreviousPage,
 }: SearchResultsProps): React.ReactElement {
@@ -40,7 +41,10 @@ export default function SearchResults({
         return (
           <div className="flex mb-4 justify-between gap-3" key={result.name}>
             <Link
-              to={`${Paths.Details}/${id}`}
+              to={{
+                pathname: `${Paths.Details}/${id}`,
+                search: `page=${searchParam}`,
+              }}
               className="text-xl text-left font-bold hover:text-blue-400"
             >
               {result.name}

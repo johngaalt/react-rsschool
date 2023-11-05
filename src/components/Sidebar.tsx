@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import StarWarsService from "../services/StarWarsService";
 import { Character } from "../services/StarWarsService.types";
 import ErrorButton from "./ErrorButton";
@@ -8,10 +8,12 @@ import SearchResults from "./SearchResults";
 
 export default function Sidebar() {
   const [people, setPeople] = useState<Character[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [hasNextPage, setHasNextPage] = useState<boolean>(false);
   const [hasPreviousPage, setHasPreviousPage] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [searchParams, setSearchParams] = useSearchParams({ page: "1" });
+
+  const currentPage = Number(searchParams.get("page"));
 
   const fetchPeople = useCallback(async (page?: number) => {
     setIsLoading(true);
@@ -24,18 +26,18 @@ export default function Sidebar() {
   }, []);
 
   const fetchNextPage = async () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    setSearchParams({ page: String(currentPage + 1) });
     await fetchPeople(currentPage + 1);
   };
 
   const fetchPreviousPage = async () => {
-    setCurrentPage((prevPage) => prevPage - 1);
+    setSearchParams({ page: String(currentPage - 1) });
     await fetchPeople(currentPage - 1);
   };
 
   useEffect(() => {
     fetchPeople(currentPage);
-  }, [currentPage, fetchPeople]);
+  }, [fetchPeople, currentPage]);
 
   return (
     <>
@@ -51,6 +53,7 @@ export default function Sidebar() {
             onNextPage={fetchNextPage}
             onPreviousPage={fetchPreviousPage}
             results={people}
+            searchParam={String(currentPage)}
             hasNextPage={hasNextPage}
             hasPreviousPage={hasPreviousPage}
           />

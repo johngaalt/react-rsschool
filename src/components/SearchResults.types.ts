@@ -6,4 +6,5 @@ export interface SearchResultsProps {
   onPreviousPage: () => void;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
+  searchParam: string;
 }

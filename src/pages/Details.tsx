@@ -5,26 +5,26 @@ import { Character as CharacterType } from "../services/StarWarsService.types";
 import cross from "../assets/cross-1.svg";
 import { Paths } from "../components/Router.types";
 
-export default function Character() {
+export default function Details() {
   const { id } = useParams();
-  const [character, setCharacter] = useState<CharacterType>();
+  const [character, setDetails] = useState<CharacterType>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const closeCharacterSection = () => {
+  const closeDetailsSection = () => {
     navigate(Paths.Home);
   };
 
   useEffect(() => {
-    async function fetchCharacter() {
+    async function fetchDetails() {
       if (id) {
         setIsLoading(true);
         const response = await StarWarsService.getById(id);
-        setCharacter(response);
+        setDetails(response);
         setIsLoading(false);
       }
     }
-    fetchCharacter();
+    fetchDetails();
   }, [id]);
 
   return (
@@ -34,7 +34,7 @@ export default function Character() {
           Star Wars Universe
         </h1>
         <button
-          onClick={closeCharacterSection}
+          onClick={closeDetailsSection}
           className="cursor-pointer "
           type="button"
         >
