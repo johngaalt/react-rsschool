@@ -1,9 +1,9 @@
-import { Character } from "./services/StarWarsService.types";
+import { Details } from "./services/StarWarsService.types";
 
 export interface AppProps {}
 
 export interface AppState {
-  people: Character[];
+  people: Details[];
   currentPage: number;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
