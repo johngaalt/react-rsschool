@@ -1,6 +1,7 @@
 import {
   SyntheticEvent,
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -12,6 +13,7 @@ import ErrorButton from "./ErrorButton";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 import { Paths } from "./Router.types";
+import { SearchTermContext } from "./SearchTermContext";
 
 export default function Sidebar() {
   const [people, setPeople] = useState<Details[]>([]);
@@ -21,18 +23,21 @@ export default function Sidebar() {
   const [searchParams, setSearchParams] = useSearchParams({ page: "1" });
   const navigate = useNavigate();
   const sidebarRef = useRef(null);
+  const { searchTerm } = useContext(SearchTermContext);
 
   const currentPage = Number(searchParams.get("page"));
 
-  const fetchPeople = useCallback(async (page?: number) => {
-    setIsLoading(true);
-    const searchTerm = localStorage.getItem("searchTerm");
-    const response = await StarWarsService.getAll(searchTerm, page);
-    setIsLoading(false);
-    setPeople(response.results);
-    setHasNextPage(!!response.next);
-    setHasPreviousPage(!!response.previous);
-  }, []);
+  const fetchPeople = useCallback(
+    async (page?: number) => {
+      setIsLoading(true);
+      const response = await StarWarsService.getAll(searchTerm, page);
+      setIsLoading(false);
+      setPeople(response.results);
+      setHasNextPage(!!response.next);
+      setHasPreviousPage(!!response.previous);
+    },
+    [searchTerm],
+  );
 
   const fetchNextPage = async () => {
     setSearchParams({ page: String(currentPage + 1) });
