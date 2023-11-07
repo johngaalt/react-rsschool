@@ -1,26 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { SearchBarProps } from "./SearchBar.types";
+import { SearchTermContext } from "./SearchTermContext";
 
 export default function SearchBar({
   onSearch,
 }: SearchBarProps): React.JSX.Element {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
-  useEffect(() => {
-    const savedSearchTerm = localStorage.getItem("searchTerm");
-    if (savedSearchTerm) {
-      setSearchTerm(savedSearchTerm);
-    }
-  }, []);
+  const { searchTerm, saveSearchData } = useContext(SearchTermContext);
 
   const handleSearch = () => {
     onSearch();
-  };
-
-  const saveSearchData = (term: string): void => {
-    localStorage.setItem("searchTerm", term);
-
-    setSearchTerm(term);
   };
 
   return (
