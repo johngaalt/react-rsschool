@@ -21,7 +21,6 @@ export function SearchTermProvider({ children }: SearchTermProviderProps) {
 
   const saveSearchData = (term: string): void => {
     localStorage.setItem("searchTerm", term);
-
     setSearchTerm(term);
   };
 

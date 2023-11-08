@@ -12,7 +12,7 @@ const getAll = async (
     url += `/?search=${searchTerm}`;
   }
 
-  if (page) {
+  if (page && !searchTerm) {
     url += `/?page=${page}`;
   }
 
