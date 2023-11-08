@@ -51,12 +51,10 @@ export function SidebarContextProvider({
 
   const fetchNextPage = async () => {
     setSearchParams({ page: String(currentPage + 1) });
-    await fetchPeople(currentPage + 1);
   };
 
   const fetchPreviousPage = async () => {
     setSearchParams({ page: String(currentPage - 1) });
-    await fetchPeople(currentPage - 1);
   };
 
   useEffect(() => {
