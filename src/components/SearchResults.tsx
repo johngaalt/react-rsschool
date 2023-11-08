@@ -1,29 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { SearchResultsProps } from "./SearchResults.types";
 import { Paths } from "./Router.types";
+import { Details } from "../services/StarWarsService.types";
+import { SidebarContext } from "./SidebarContext";
 
-export default function SearchResults({
-  hasNextPage,
-  hasPreviousPage,
-  results,
-  searchParam,
-  onNextPage,
-  onPreviousPage,
-}: SearchResultsProps): React.ReactElement {
+export default function SearchResults(): React.ReactElement {
+  const {
+    people,
+    hasNextPage,
+    hasPreviousPage,
+    fetchNextPage,
+    fetchPreviousPage,
+    currentPage,
+  } = useContext(SidebarContext);
+
   const buttonNextClass = hasNextPage ? "bg-white" : "bg-gray-300";
-
   const buttonPreviousClass = hasPreviousPage ? "bg-white" : "bg-gray-300";
+  const searchParam = String(currentPage);
 
   return (
     <div className="flex flex-col justify-center items-start ">
       <div className="flex flex-row mb-5">
         <h1 className="text-3xl font-bold mr-3 ">Search Results</h1>
       </div>
-      {results.map((result) => {
-        const id = result.url.split("/").at(-2);
+      {people.map((character: Details) => {
+        const id = character.url.split("/").at(-2);
         return (
-          <div className="flex mb-4 justify-between gap-3" key={result.name}>
+          <div className="flex mb-4 justify-between gap-3" key={character.name}>
             <Link
               to={{
                 pathname: `${Paths.Details}/${id}`,
@@ -31,7 +34,7 @@ export default function SearchResults({
               }}
               className="text-xl text-left font-bold hover:text-blue-400"
             >
-              {result.name}
+              {character.name}
             </Link>
           </div>
         );
@@ -40,17 +43,17 @@ export default function SearchResults({
         <h2 className="text-xl font-bold">Page: {searchParam}</h2>
         <button
           disabled={!hasPreviousPage}
-          className={`flex justify-center items-center py-1 px-2 mr-3  ${buttonPreviousClass} text-orange-500 rounded-md hover:text-blue-500 shadow-md hover:shadow-lg transition duration-300 ease-in-out`}
+          className={`flex justify-center items-center py-1 px-2 mr-3 cursor-pointer ${buttonPreviousClass} text-orange-500 rounded-md hover:text-blue-500 shadow-md hover:shadow-lg transition duration-300 ease-in-out`}
           type="button"
-          onClick={onPreviousPage}
+          onClick={fetchPreviousPage}
         >
           Previous Page
         </button>
         <button
           disabled={!hasNextPage}
-          className={`flex justify-center items-center py-1 px-2 ${buttonNextClass} text-orange-500 rounded-md hover:text-blue-500 shadow-md hover:shadow-lg transition duration-300 ease-in-out`}
+          className={`flex justify-center items-center py-1 px-2 cursor-pointer ${buttonNextClass} text-orange-500 rounded-md hover:text-blue-500 shadow-md hover:shadow-lg transition duration-300 ease-in-out`}
           type="button"
-          onClick={onNextPage}
+          onClick={fetchNextPage}
         >
           Next Page
         </button>

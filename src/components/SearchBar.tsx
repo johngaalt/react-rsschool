@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
-import { SearchBarProps } from "./SearchBar.types";
 import { SearchTermContext } from "./SearchTermContext";
+import { SidebarContext } from "./SidebarContext";
 
-export default function SearchBar({
-  onSearch,
-}: SearchBarProps): React.JSX.Element {
+export default function SearchBar(): React.JSX.Element {
   const { searchTerm, saveSearchData } = useContext(SearchTermContext);
+  const { fetchPeople } = useContext(SidebarContext);
 
   const handleSearch = () => {
-    onSearch();
+    fetchPeople();
   };
 
   return (
