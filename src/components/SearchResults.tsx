@@ -45,6 +45,7 @@ export default function SearchResults(): React.ReactElement {
                 search: `page=${searchParam}`,
               }}
               className="text-xl text-left font-bold hover:text-blue-400"
+              data-testid="search-result"
             >
               {character.name}
             </Link>
@@ -77,9 +78,7 @@ export default function SearchResults(): React.ReactElement {
           defaultValue={limit}
         >
           <option value="5">5</option>
-          <option selected value="10">
-            10
-          </option>
+          <option value="10">10</option>
         </select>
       </div>
     </div>
