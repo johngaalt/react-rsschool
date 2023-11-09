@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import {
   SearchTermContextType,
   SearchTermProviderProps,
@@ -10,14 +10,11 @@ export const SearchTermContext = createContext<SearchTermContextType>({
 });
 
 export function SearchTermProvider({ children }: SearchTermProviderProps) {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const setInitialState = () => {
+    return localStorage.getItem("searchTerm") || "";
+  };
 
-  useEffect(() => {
-    const savedSearchTerm = localStorage.getItem("searchTerm");
-    if (savedSearchTerm) {
-      setSearchTerm(savedSearchTerm);
-    }
-  }, []);
+  const [searchTerm, setSearchTerm] = useState(setInitialState);
 
   const saveSearchData = (term: string): void => {
     localStorage.setItem("searchTerm", term);
