@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Paths } from "./Router.types";
 import { Details } from "../services/StarWarsService.types";
@@ -12,11 +12,23 @@ export default function SearchResults(): React.ReactElement {
     fetchNextPage,
     fetchPreviousPage,
     currentPage,
+    fetchByLimit,
+    limit,
   } = useContext(SidebarContext);
+
+  const selectRef = useRef<HTMLSelectElement>(null);
 
   const buttonNextClass = hasNextPage ? "bg-white" : "bg-gray-300";
   const buttonPreviousClass = hasPreviousPage ? "bg-white" : "bg-gray-300";
   const searchParam = String(currentPage);
+
+  function changeLimit() {
+    const limit = selectRef?.current?.value;
+
+    if (limit) {
+      fetchByLimit(Number(limit));
+    }
+  }
 
   return (
     <div className="flex flex-col justify-center items-start ">
@@ -57,6 +69,18 @@ export default function SearchResults(): React.ReactElement {
         >
           Next Page
         </button>
+        <select
+          name="limit"
+          id="limit"
+          ref={selectRef}
+          onChange={changeLimit}
+          defaultValue={limit}
+        >
+          <option value="5">5</option>
+          <option selected value="10">
+            10
+          </option>
+        </select>
       </div>
     </div>
   );

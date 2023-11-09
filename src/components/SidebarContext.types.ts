@@ -9,6 +9,8 @@ export interface SidebarContextTypes {
   fetchPreviousPage: () => void;
   currentPage: number;
   fetchPeople: (page?: number) => void;
+  fetchByLimit: (limit: number) => void;
+  limit: number;
 }
 
 export interface SidebarContextProviderProps {

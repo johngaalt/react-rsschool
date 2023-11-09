@@ -23,12 +23,15 @@ export const SidebarContext = createContext<SidebarContextTypes>({
   fetchPreviousPage: () => {},
   currentPage: 1,
   fetchPeople: () => {},
+  fetchByLimit: () => {},
+  limit: 10,
 });
 
 export function SidebarContextProvider({
   children,
 }: SidebarContextProviderProps) {
   const [people, setPeople] = useState<Details[]>([]);
+  const [limit, setLimit] = useState<number>(10);
   const [hasNextPage, setHasNextPage] = useState<boolean>(false);
   const [hasPreviousPage, setHasPreviousPage] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -40,13 +43,13 @@ export function SidebarContextProvider({
   const fetchPeople = useCallback(
     async (page?: number) => {
       setIsLoading(true);
-      const response = await StarWarsService.getAll(searchTerm, page);
+      const response = await StarWarsService.getAll(searchTerm, page, limit);
       setIsLoading(false);
       setPeople(response.results);
       setHasNextPage(!!response.next);
       setHasPreviousPage(!!response.previous);
     },
-    [searchTerm],
+    [searchTerm, limit],
   );
 
   const fetchNextPage = async () => {
@@ -55,6 +58,10 @@ export function SidebarContextProvider({
 
   const fetchPreviousPage = async () => {
     setSearchParams({ page: String(currentPage - 1) });
+  };
+
+  const fetchByLimit = (limit: number) => {
+    setLimit(limit);
   };
 
   useEffect(() => {
@@ -72,6 +79,8 @@ export function SidebarContextProvider({
         fetchNextPage,
         fetchPreviousPage,
         fetchPeople,
+        fetchByLimit,
+        limit,
       }}
     >
       {children}
