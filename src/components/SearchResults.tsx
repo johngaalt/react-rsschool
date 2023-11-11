@@ -1,8 +1,7 @@
 import React, { useContext, useRef } from "react";
-import { Link } from "react-router-dom";
-import { Paths } from "./Router.types";
 import { Details } from "../services/StarWarsService.types";
 import { SidebarContext } from "./SidebarContext";
+import SearchResultItem from "./SearchResultItem";
 
 export default function SearchResults(): React.ReactElement {
   const {
@@ -36,23 +35,13 @@ export default function SearchResults(): React.ReactElement {
         <h1 className="text-3xl font-bold mr-3 ">Search Results</h1>
       </div>
       {people.length === 0 && <h2 className="text-xl font-bold">No results</h2>}
-      {people.map((character: Details) => {
-        const id = character.url.split("/").at(-2);
-        return (
-          <div className="flex mb-4 justify-between gap-3" key={character.name}>
-            <Link
-              to={{
-                pathname: `${Paths.Details}/${id}`,
-                search: `page=${searchParam}`,
-              }}
-              className="text-xl text-left font-bold hover:text-blue-400"
-              data-testid="search-result"
-            >
-              {character.name}
-            </Link>
-          </div>
-        );
-      })}
+      {people.map((character: Details) => (
+        <SearchResultItem
+          key={character.name}
+          details={character}
+          searchParam={searchParam}
+        />
+      ))}
       <div className="flex flex-row justify-between items-center mt-10 gap-3">
         <h2 className="text-xl font-bold">Page: {searchParam}</h2>
         <button
