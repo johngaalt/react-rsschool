@@ -33,4 +33,14 @@ describe("SearchResults", () => {
 
     expect(cards).toHaveLength(5);
   });
+
+  it("should render message when no results", () => {
+    renderSearchResults({
+      people: [],
+    });
+
+    const message = screen.queryByText("No results");
+
+    expect(message).toBeInTheDocument();
+  });
 });

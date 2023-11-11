@@ -35,6 +35,7 @@ export default function SearchResults(): React.ReactElement {
       <div className="flex flex-row mb-5">
         <h1 className="text-3xl font-bold mr-3 ">Search Results</h1>
       </div>
+      {people.length === 0 && <h2 className="text-xl font-bold">No results</h2>}
       {people.map((character: Details) => {
         const id = character.url.split("/").at(-2);
         return (
