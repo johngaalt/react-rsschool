@@ -36,4 +36,29 @@ describe("Details", () => {
       expect(loading).toBeInTheDocument();
     });
   });
+
+  it("should render relevant data", async () => {
+    const name = faker.person.fullName();
+    const birth = faker.string.alphanumeric({ length: 6 });
+    const eyeColor = faker.internet.color();
+    const hairColor = faker.internet.color();
+    jest.spyOn(StarWarsService, "getById").mockResolvedValue({
+      birth_year: birth,
+      eye_color: eyeColor,
+      hair_color: hairColor,
+      name: name,
+      url: faker.internet.url(),
+    });
+    renderDetails();
+
+    const detailsName = await screen.findByText(name);
+    const detailsBirth = await screen.findByText(new RegExp(birth));
+    const detailsHair = await screen.findByText(new RegExp(hairColor));
+    const detailsEye = await screen.findByText(new RegExp(eyeColor));
+
+    expect(detailsName).toBeInTheDocument();
+    expect(detailsBirth).toBeInTheDocument();
+    expect(detailsHair).toBeInTheDocument();
+    expect(detailsEye).toBeInTheDocument();
+  });
 });
