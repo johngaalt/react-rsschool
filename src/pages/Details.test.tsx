@@ -2,7 +2,12 @@ import Router from "react-router-dom";
 import StarWarsService from "../services/StarWarsService";
 import { wrapWithRouter } from "../test-helpers/Router";
 import Details from "./Details";
-import { render, screen } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import { faker } from "@faker-js/faker";
 
 jest.mock("../services/StarWarsService");
@@ -58,5 +63,14 @@ describe("Details", () => {
     expect(detailsBirth).toBeInTheDocument();
     expect(detailsHair).toBeInTheDocument();
     expect(detailsEye).toBeInTheDocument();
+  });
+
+  it("should hide element after click", () => {
+    const { container } = renderDetails();
+    const cross = screen.getByAltText("cross");
+
+    fireEvent.click(cross);
+
+    waitForElementToBeRemoved(() => container);
   });
 });
