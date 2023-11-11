@@ -9,6 +9,7 @@ function renderSearchResultItem(props: SearchResultItemProps) {
 
   return render(withRouter);
 }
+
 describe("SearchResultItem", () => {
   it("should render relevant data", () => {
     const itemFullname = faker.person.fullName();
