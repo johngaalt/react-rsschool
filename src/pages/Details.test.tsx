@@ -2,7 +2,7 @@ import Router from "react-router-dom";
 import StarWarsService from "../services/StarWarsService";
 import { wrapWithRouter } from "../test-helpers/Router";
 import Details from "./Details";
-import { render } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { faker } from "@faker-js/faker";
 
 jest.mock("../services/StarWarsService");
@@ -25,5 +25,15 @@ describe("Details", () => {
     renderDetails();
 
     expect(StarWarsService.getById).toHaveBeenCalled();
+  });
+
+  it("should render loading indicator", async () => {
+    renderDetails();
+
+    const loading = screen.getByText("Loading...");
+
+    await waitFor(() => {
+      expect(loading).toBeInTheDocument();
+    });
   });
 });
