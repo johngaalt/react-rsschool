@@ -27,6 +27,8 @@ describe("SearchResults", () => {
     renderSearchResults({
       limit: 5,
       people: generateDetails(5),
+      hasNextPage: true,
+      hasPreviousPage: false,
     });
 
     const cards = await screen.findAllByTestId("search-result");
@@ -38,6 +40,8 @@ describe("SearchResults", () => {
     renderSearchResults({
       people: [],
       limit: 10,
+      hasNextPage: true,
+      hasPreviousPage: false,
     });
 
     const message = screen.queryByText("No results");

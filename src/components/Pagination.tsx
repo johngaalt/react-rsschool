@@ -29,7 +29,9 @@ export default function Pagination() {
 
   return (
     <div className="flex flex-row justify-between items-center mt-10 gap-3">
-      <h2 className="text-xl font-bold">Page: {searchParam}</h2>
+      <h2 className="text-xl font-bold" data-testid="current-page">
+        Page: {searchParam}
+      </h2>
       <button
         disabled={!hasPreviousPage}
         className={`flex justify-center items-center py-1 px-2 mr-3 cursor-pointer ${buttonPreviousClass} text-orange-500 rounded-md hover:text-blue-500 shadow-md hover:shadow-lg transition duration-300 ease-in-out`}
