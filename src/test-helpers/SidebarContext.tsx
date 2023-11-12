@@ -1,29 +1,27 @@
-import { SidebarContext } from "../components/SidebarContext";
+import { SidebarContextProvider } from "../components/SidebarContext";
 import { SidebarContextTypes } from "../components/SidebarContext.types";
 import { Details } from "../services/StarWarsService.types";
+import fetchMock from "fetch-mock";
+
+export type SidebarContextMock = Pick<SidebarContextTypes, "limit" | "people">;
 
 export function wrapWithSidebarContext(
   component: React.ReactElement,
-  context?: Partial<SidebarContextTypes>,
-) {
-  const defaultContext = {
-    people: generateDetails(),
-    hasNextPage: false,
-    hasPreviousPage: false,
-    isLoading: false,
-    fetchNextPage: () => {},
-    fetchPreviousPage: () => {},
-    currentPage: 1,
-    fetchPeople: () => {},
-    fetchByLimit: () => {},
+  mock: SidebarContextMock = {
     limit: 10,
-  };
-
-  return (
-    <SidebarContext.Provider value={{ ...defaultContext, ...context }}>
-      {component}
-    </SidebarContext.Provider>
+    people: generateDetails(),
+  },
+) {
+  fetchMock.getOnce(
+    /people/,
+    {
+      results: mock.people,
+    },
+    {
+      overwriteRoutes: true,
+    },
   );
+  return <SidebarContextProvider>{component}</SidebarContextProvider>;
 }
 
 export function generateDetails(count = 10): Details[] {
