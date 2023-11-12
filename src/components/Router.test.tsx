@@ -5,10 +5,10 @@ import { SearchTermProvider } from "./SearchTermContext";
 import Router from "./Router";
 import userEvent from "@testing-library/user-event";
 
-function renderRouter() {
+function renderRouter(initialEntries = "/") {
   const withSidebarContext = wrapWithSidebarContext(<Router />);
   return render(
-    <MemoryRouter>
+    <MemoryRouter initialEntries={[initialEntries]}>
       <SearchTermProvider>{withSidebarContext}</SearchTermProvider>
     </MemoryRouter>,
   );
@@ -41,5 +41,13 @@ describe("Router", () => {
 
     const detailsHeader = await screen.findByText(/star wars universe/i);
     expect(detailsHeader).toBeInTheDocument();
+  });
+
+  it("should render 404 page when route is not correct", () => {
+    renderRouter("/bad-route");
+
+    const notFound = screen.getByText(/404 Not Found/i);
+
+    expect(notFound).toBeInTheDocument();
   });
 });
