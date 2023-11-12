@@ -4,10 +4,10 @@ import { wrapWithRouter } from "../test-helpers/Router";
 import { wrapWithSidebarContext } from "../test-helpers/SidebarContext";
 
 function renderPagination() {
-  const paginationWithContext = wrapWithSidebarContext(<Pagination />);
-  const withRouter = wrapWithRouter(paginationWithContext);
+  const withRouter = wrapWithRouter(<Pagination />);
+  const paginationWithContext = wrapWithSidebarContext(withRouter);
 
-  return render(withRouter);
+  return render(paginationWithContext);
 }
 
 describe("Pagination", () => {
