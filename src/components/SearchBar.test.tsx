@@ -29,4 +29,14 @@ describe("SearchBar", () => {
 
     expect(spy).toHaveBeenCalledWith("searchTerm", searchTerm);
   });
+
+  it("should retrieve search term from local storage", () => {
+    const searchTerm = faker.string.alpha({ length: 6 });
+    localStorage.setItem("searchTerm", searchTerm);
+    renderSearchBar();
+
+    const input = screen.getByPlaceholderText(/type person's name/i);
+
+    expect(input).toHaveValue(searchTerm);
+  });
 });
