@@ -50,4 +50,14 @@ describe("Router", () => {
 
     expect(notFound).toBeInTheDocument();
   });
+
+  it("should navigate to home page", async () => {
+    renderRouter("/details/1");
+
+    const sidebar = screen.getByTestId(/sidebar/);
+    fireEvent.click(sidebar);
+
+    const image = await screen.findByAltText(/star wars/);
+    expect(image).toBeInTheDocument();
+  });
 });

@@ -20,6 +20,7 @@ export default function Sidebar() {
   return (
     <>
       <div
+        data-testid="sidebar"
         className="flex flex-col w-1/3 h-full cursor-pointer"
         ref={sidebarRef}
         onClick={(e) => {
