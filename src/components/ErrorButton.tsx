@@ -10,6 +10,7 @@ export default function ErrorButton() {
   if (showError) {
     throw new Error("Error");
   }
+
   return (
     <button
       className="bg-blue-800 text-white rounded py-1 px-4 flex items-center justify-center"
