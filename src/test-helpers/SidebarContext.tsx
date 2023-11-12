@@ -12,8 +12,8 @@ export function wrapWithSidebarContext(
     people: generateDetails(),
   },
 ) {
-  fetchMock.getOnce(
-    /people/,
+  fetchMock.get(
+    "*",
     {
       results: mock.people,
     },
