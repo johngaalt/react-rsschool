@@ -9,7 +9,7 @@ export const searchTermSlice = createSlice({
     setSearchTerm: (state, action) => {
       const term = action.payload;
       localStorage.setItem("searchTerm", term);
-      return term;
+      return (state = term);
     },
   },
 });
