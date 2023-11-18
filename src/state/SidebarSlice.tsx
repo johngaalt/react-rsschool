@@ -1,19 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Details } from "../services/StarWarsService.types";
 import StarWarsService from "../services/StarWarsService";
-
-interface SidebarState {
-  people: Details[];
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  isLoading: boolean;
-  currentPage: number;
-  limit: number;
-}
-
-interface FetchError {
-  message: string;
-}
+import { FetchError, SidebarState } from "./SidebarSlice.types";
 
 const initialState: SidebarState = {
   people: [],
