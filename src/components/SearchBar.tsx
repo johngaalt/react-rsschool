@@ -1,15 +1,18 @@
 import React, { useContext, useRef } from "react";
-import { SearchTermContext } from "./SearchTermContext";
 import { SidebarContext } from "./SidebarContext";
+import { useDispatch } from "react-redux";
+import { saveTerm, selectSearchTerm } from "../state/SearchTermSlice";
+import { useAppSelector } from "../state/hooks";
 
 export default function SearchBar(): React.JSX.Element {
-  const { searchTerm, saveSearchData } = useContext(SearchTermContext);
   const { fetchPeople } = useContext(SidebarContext);
+  const searchTerm = useAppSelector(selectSearchTerm);
+  const dispatch = useDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSearch = () => {
     if (inputRef.current) {
-      saveSearchData(inputRef.current.value);
+      dispatch(saveTerm(inputRef.current.value));
       fetchPeople();
     }
   };

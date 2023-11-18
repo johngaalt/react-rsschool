@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import {
   SidebarContextTypes,
   SidebarContextProviderProps,
@@ -12,7 +6,8 @@ import {
 import { Details } from "../services/StarWarsService.types";
 import { useSearchParams } from "react-router-dom";
 import StarWarsService from "../services/StarWarsService";
-import { SearchTermContext } from "./SearchTermContext";
+import { useSelector } from "react-redux";
+import { selectSearchTerm } from "../state/SearchTermSlice";
 
 export const SidebarContext = createContext<SidebarContextTypes>({
   people: [],
@@ -36,8 +31,7 @@ export function SidebarContextProvider({
   const [hasPreviousPage, setHasPreviousPage] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams({ page: "1" });
-  const { searchTerm } = useContext(SearchTermContext);
-
+  const searchTerm = useSelector(selectSearchTerm);
   const currentPage = Number(searchParams.get("page"));
 
   const fetchPeople = useCallback(
