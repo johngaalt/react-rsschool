@@ -1,31 +1,18 @@
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import StarWarsService from "../services/StarWarsService";
-import { Details as DetailsType } from "../services/StarWarsService.types";
 import cross from "../assets/cross-1.svg";
 import { Paths } from "../components/Router.types";
+import { useGetByIdQuery } from "../state/query";
 
 export default function Details() {
   const { id } = useParams();
-  const [details, setDetails] = useState<DetailsType>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { data: details, isFetching } = useGetByIdQuery(id || "", {
+    skip: !id,
+  });
   const navigate = useNavigate();
 
   const closeDetailsSection = () => {
     navigate(Paths.Home);
   };
-
-  useEffect(() => {
-    async function fetchDetails() {
-      if (id) {
-        setIsLoading(true);
-        const response = await StarWarsService.getById(id);
-        setDetails(response);
-        setIsLoading(false);
-      }
-    }
-    fetchDetails();
-  }, [id]);
 
   return (
     <div className="flex flex-col gap-10">
@@ -47,7 +34,7 @@ export default function Details() {
           />
         </button>
       </div>
-      {isLoading ? (
+      {isFetching ? (
         <div className="flex justify-center items-center">
           <span className="visually-hidden animate-pulse">Loading...</span>
         </div>

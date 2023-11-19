@@ -15,7 +15,7 @@ export default function Sidebar() {
   const currentPage = useAppSelector(selectCurrentPage);
   const searchTerm = useAppSelector(selectSearchTerm);
   const limit = useAppSelector(selectLimit);
-  const { isLoading } = useGetAllQuery({
+  const { isFetching } = useGetAllQuery({
     searchTerm,
     limit,
     page: currentPage,
@@ -39,7 +39,7 @@ export default function Sidebar() {
       >
         <ErrorButton />
         <SearchBar />
-        {isLoading ? (
+        {isFetching ? (
           <div className="flex justify-center items-center animate-pulse">
             Loading...
           </div>
