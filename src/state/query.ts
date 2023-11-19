@@ -6,17 +6,15 @@ export const swapiApi = createApi({
   reducerPath: "swapiApi",
   baseQuery: fetchBaseQuery({ baseUrl: "https://swapi.dev/api/" }),
   endpoints: (builder) => ({
-    getAll: builder.query<ApiResponse<Details[]>, GetPeopleArgs>({
-      query: ({ searchTerm, page }) => {
-        const searchParams = new URLSearchParams();
-        if (searchTerm) {
-          searchParams.append("search", searchTerm);
-        }
-        if (page) {
-          searchParams.append("page", page.toString());
-        }
-        return { url: `people/?${searchParams}` };
-      },
+    getAll: builder.query<ApiResponse<Details[]>, GetPeopleArgs | undefined>({
+      query: ({ searchTerm = "", page = 1, limit = 10 } = {}) => ({
+        url: `people`,
+        params: { search: searchTerm, page, limit },
+      }),
+      transformResponse: (response: ApiResponse<Details[]>, _meta, arg) => ({
+        ...response,
+        results: response.results.slice(0, arg?.limit || 10),
+      }),
     }),
     getById: builder.query<Details, string>({
       query: (id) => `people/${id}`,
@@ -24,4 +22,4 @@ export const swapiApi = createApi({
   }),
 });
 
-export const { useGetAllQuery, useGetByIdQuery } = swapiApi;
+export const { useGetAllQuery, useGetByIdQuery, useLazyGetAllQuery } = swapiApi;

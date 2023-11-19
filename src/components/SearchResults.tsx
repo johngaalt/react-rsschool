@@ -1,13 +1,20 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Details } from "../services/StarWarsService.types";
-import { SidebarContext } from "./SidebarContext";
 import SearchResultItem from "./SearchResultItem";
 import Pagination from "./Pagination";
+import { useGetAllQuery } from "../state/query";
+import { useAppSelector } from "../state/hooks";
+import { selectCurrentPage, selectLimit } from "../state/SidebarSlice";
+import { selectSearchTerm } from "../state/SearchTermSlice";
 
 export default function SearchResults(): React.ReactElement {
-  const { people, currentPage } = useContext(SidebarContext);
+  const currentPage = useAppSelector(selectCurrentPage);
+  const searchTerm = useAppSelector(selectSearchTerm);
+  const limit = useAppSelector(selectLimit);
+  const { data } = useGetAllQuery({ searchTerm, limit, page: currentPage });
 
   const searchParam = String(currentPage);
+  const people = data?.results || [];
 
   return (
     <div className="flex flex-col justify-center items-start ">

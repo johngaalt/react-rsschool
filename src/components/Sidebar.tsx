@@ -1,15 +1,25 @@
-import { SyntheticEvent, useContext, useRef } from "react";
+import { SyntheticEvent, useRef } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import ErrorButton from "./ErrorButton";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 import { Paths } from "./Router.types";
-import { SidebarContext } from "./SidebarContext";
+import { useGetAllQuery } from "../state/query";
+import { selectSearchTerm } from "../state/SearchTermSlice";
+import { selectCurrentPage, selectLimit } from "../state/SidebarSlice";
+import { useAppSelector } from "../state/hooks";
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const sidebarRef = useRef(null);
-  const { isLoading } = useContext(SidebarContext);
+  const currentPage = useAppSelector(selectCurrentPage);
+  const searchTerm = useAppSelector(selectSearchTerm);
+  const limit = useAppSelector(selectLimit);
+  const { isLoading } = useGetAllQuery({
+    searchTerm,
+    limit,
+    page: currentPage,
+  });
 
   const navigateToHome = (e: SyntheticEvent) => {
     if (e.target === sidebarRef.current) {

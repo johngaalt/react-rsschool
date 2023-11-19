@@ -1,20 +1,34 @@
-import { useContext, useRef } from "react";
-import { SidebarContext } from "./SidebarContext";
+import { useRef } from "react";
+import { useAppSelector } from "../state/hooks";
+import {
+  selectCurrentPage,
+  selectHasNextPage,
+  selectHasPreviousPage,
+  selectLimit,
+} from "../state/SidebarSlice";
+import { useLazyGetAllQuery } from "../state/query";
 
 export default function Pagination() {
-  const {
-    hasNextPage,
-    hasPreviousPage,
-    fetchNextPage,
-    fetchPreviousPage,
-    limit,
-    fetchByLimit,
-    currentPage,
-  } = useContext(SidebarContext);
-
   const selectRef = useRef<HTMLSelectElement>(null);
+  const currentPage = useAppSelector(selectCurrentPage);
+  const hasNextPage = useAppSelector(selectHasNextPage);
+  const hasPreviousPage = useAppSelector(selectHasPreviousPage);
+  const limit = useAppSelector(selectLimit);
+  const [fetchPeople] = useLazyGetAllQuery();
 
   const searchParam = String(currentPage);
+
+  function fetchByLimit(limit: number) {
+    fetchPeople({ limit });
+  }
+
+  function fetchPreviousPage() {
+    fetchPeople({ page: currentPage - 1 });
+  }
+
+  function fetchNextPage() {
+    fetchPeople({ page: currentPage + 1 });
+  }
 
   function changeLimit() {
     const limit = selectRef?.current?.value;
