@@ -1,25 +1,22 @@
 import { useRef } from "react";
 import { useAppSelector } from "../state/hooks";
-import {
-  selectCurrentPage,
-  selectHasNextPage,
-  selectHasPreviousPage,
-  selectLimit,
-} from "../state/SidebarSlice";
+import { selectCurrentPage, selectLimit } from "../state/SidebarSlice";
 import { useLazyGetAllQuery } from "../state/query";
+import { selectSearchTerm } from "../state/SearchTermSlice";
 
 export default function Pagination() {
   const selectRef = useRef<HTMLSelectElement>(null);
   const currentPage = useAppSelector(selectCurrentPage);
-  const hasNextPage = useAppSelector(selectHasNextPage);
-  const hasPreviousPage = useAppSelector(selectHasPreviousPage);
   const limit = useAppSelector(selectLimit);
-  const [fetchPeople] = useLazyGetAllQuery();
+  const searchTerm = useAppSelector(selectSearchTerm);
+  const [fetchPeople, { data }] = useLazyGetAllQuery();
+  const hasNextPage = data?.next;
+  const hasPreviousPage = data?.previous;
 
   const searchParam = String(currentPage);
 
   function fetchByLimit(limit: number) {
-    fetchPeople({ limit });
+    fetchPeople({ limit, page: currentPage, searchTerm });
   }
 
   function fetchPreviousPage() {
