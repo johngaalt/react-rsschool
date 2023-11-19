@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ApiResponse, Details } from "../services/StarWarsService.types";
+import { ApiResponse, Details } from "./queryApi.types";
 import { GetPeopleArgs } from "./query.types";
 
 export const swapiApi = createApi({

@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { SidebarContextProvider } from "../components/SidebarContext";
 import { SidebarContextTypes } from "../components/SidebarContext.types";
-import { Details } from "../services/StarWarsService.types";
+import { Details } from "../state/queryApi.types";
 import fetchMock from "fetch-mock";
 
 export type SidebarContextMock = Pick<

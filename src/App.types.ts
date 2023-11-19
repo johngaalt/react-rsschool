@@ -1,4 +1,4 @@
-import { Details } from "./services/StarWarsService.types";
+import { Details } from "./state/queryApi.types";
 
 export interface AppProps {}
 

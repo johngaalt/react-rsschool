@@ -1,5 +1,5 @@
 import React from "react";
-import { Details } from "../services/StarWarsService.types";
+import { Details } from "../state/queryApi.types";
 import SearchResultItem from "./SearchResultItem";
 import Pagination from "./Pagination";
 import { useGetAllQuery } from "../state/query";
