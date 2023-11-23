@@ -1,17 +1,17 @@
-import { useNavigate, useParams } from "react-router-dom";
-import cross from "../assets/cross-1.svg";
-import { Paths } from "../components/Router.types";
+import { useRouter } from "next/router";
 import { useGetByIdQuery } from "../state/query";
+import Image from "next/image";
 
 export default function Details() {
-  const { id } = useParams();
+  const router = useRouter();
+  const { id } = router.query;
+
   const { data: details, isFetching } = useGetByIdQuery(id || "", {
     skip: !id,
   });
-  const navigate = useNavigate();
 
   const closeDetailsSection = () => {
-    navigate(Paths.Home);
+    router.push("/");
   };
 
   return (
@@ -25,8 +25,8 @@ export default function Details() {
           className="cursor-pointer "
           type="button"
         >
-          <img
-            src={cross}
+          <Image
+            src="/cross-1.svg"
             alt="cross"
             width={30}
             height={30}
