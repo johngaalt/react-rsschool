@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
-import { useGetByIdQuery } from "../state/query";
 import Image from "next/image";
+import { useGetByIdQuery } from "../../src/state/query";
 
 export default function Details() {
   const router = useRouter();
-  const { id } = router.query;
+  const { id } = router.query as { id: string };
 
   const { data: details, isFetching } = useGetByIdQuery(id || "", {
     skip: !id,

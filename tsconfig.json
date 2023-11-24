@@ -19,7 +19,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "allowJs": true,
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/styles/*": ["styles/*"]
+    }
   },
   "include": ["src", "./jest/jest-setup.ts", "pages"],
   "references": [

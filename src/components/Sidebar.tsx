@@ -1,16 +1,14 @@
 import { SyntheticEvent, useRef } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
 import ErrorButton from "./ErrorButton";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
-import { Paths } from "./Router.types";
 import { useGetAllQuery } from "../state/query";
 import { selectSearchTerm } from "../state/SearchTermSlice";
 import { selectCurrentPage, selectLimit } from "../state/SidebarSlice";
 import { useAppSelector } from "../state/hooks";
+import router from "next/router";
 
 export default function Sidebar() {
-  const navigate = useNavigate();
   const sidebarRef = useRef(null);
   const currentPage = useAppSelector(selectCurrentPage);
   const searchTerm = useAppSelector(selectSearchTerm);
@@ -23,7 +21,7 @@ export default function Sidebar() {
 
   const navigateToHome = (e: SyntheticEvent) => {
     if (e.target === sidebarRef.current) {
-      navigate(Paths.Home);
+      router.push("/");
     }
   };
 
@@ -47,9 +45,7 @@ export default function Sidebar() {
           <SearchResults />
         )}
       </div>
-      <div className="flex justify-center items-center w-2/3">
-        <Outlet />
-      </div>
+      <div className="flex justify-center items-center w-2/3"></div>
     </>
   );
 }

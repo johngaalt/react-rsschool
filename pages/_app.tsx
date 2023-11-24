@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import ErrorBoundary from "../src/components/ErrorBoundary";
 import Sidebar from "../src/components/Sidebar";
 import { store } from "../src/state/store";
+import "@/styles/globals.css";
 
 import type { AppProps } from "next/app";
 
