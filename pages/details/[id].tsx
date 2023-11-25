@@ -1,6 +1,11 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { useGetByIdQuery } from "../../src/state/query";
+import {
+  getById,
+  getRunningQueriesThunk,
+  useGetByIdQuery,
+} from "../../src/state/query";
+import { wrapper } from "src/state/store";
 
 export default function Details() {
   const router = useRouter();
@@ -49,3 +54,18 @@ export default function Details() {
     </div>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    const id = context.params?.id;
+    if (typeof id === "string") {
+      store.dispatch(getById.initiate(id));
+    }
+
+    await Promise.all(store.dispatch(getRunningQueriesThunk()));
+
+    return {
+      props: {},
+    };
+  },
+);

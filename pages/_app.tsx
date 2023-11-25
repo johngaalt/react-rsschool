@@ -1,25 +1,22 @@
 import React from "react";
-import { Provider } from "react-redux";
 import ErrorBoundary from "../src/components/ErrorBoundary";
-import Sidebar from "../src/components/Sidebar";
-import { store } from "../src/state/store";
 import "@/styles/globals.css";
 
 import type { AppProps } from "next/app";
+import { wrapper } from "src/state/store";
+import Sidebar from "src/components/Sidebar";
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <ErrorBoundary>
-        <div className="bg-gray-100 h-screen ">
-          <div className="w-full h-full App container flex flex-row justify-between items-center gap-2">
-            <Sidebar />
-            <Component {...pageProps} />
-          </div>
+    <ErrorBoundary>
+      <div className="bg-gray-100 h-screen ">
+        <div className="w-full h-full App container flex flex-row justify-between items-center gap-2">
+          <Sidebar />
+          <Component {...pageProps} />
         </div>
-      </ErrorBoundary>
-    </Provider>
+      </div>
+    </ErrorBoundary>
   );
 }
 
-export default App;
+export default wrapper.withRedux(App);
