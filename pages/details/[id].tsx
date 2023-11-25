@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import {
+  getAll,
   getById,
   getRunningQueriesThunk,
   useGetByIdQuery,
@@ -59,6 +60,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
     const id = context.params?.id;
     if (typeof id === "string") {
+      store.dispatch(
+        getAll.initiate({
+          searchTerm: "",
+          page: 1,
+          limit: 10,
+        }),
+      );
       store.dispatch(getById.initiate(id));
     }
 

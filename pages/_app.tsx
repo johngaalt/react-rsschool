@@ -10,7 +10,7 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <ErrorBoundary>
       <div className="bg-gray-100 h-screen ">
-        <div className="w-full h-full App container flex flex-row justify-between items-center gap-2">
+        <div className="w-full h-full App container flex flex-row justify-center items-center gap-16">
           <Sidebar />
           <Component {...pageProps} />
         </div>

@@ -45,7 +45,6 @@ export default function Sidebar() {
           <SearchResults />
         )}
       </div>
-      <div className="flex justify-center items-center w-2/3"></div>
     </>
   );
 }

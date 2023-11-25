@@ -22,7 +22,8 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/images/*": ["public/*"]
     }
   },
   "include": ["src", "./jest/jest-setup.ts", "pages"],

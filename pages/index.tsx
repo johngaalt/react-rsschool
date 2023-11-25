@@ -1,18 +1,13 @@
 import Image from "next/image";
 import { getAll, getRunningQueriesThunk } from "src/state/query";
 import { wrapper } from "src/state/store";
+import image from "@/images/logo.svg";
 
 export default function Home() {
   return (
     <>
       <div className="w-full h-full">
-        <Image
-          src="/logo.svg"
-          width={1024}
-          height={500}
-          alt="star wars"
-          className=" object-cover"
-        />
+        <Image src={image} alt="star wars" className=" object-cover" />
       </div>
     </>
   );
