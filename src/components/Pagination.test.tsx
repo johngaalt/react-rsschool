@@ -27,8 +27,48 @@ describe("Pagination", () => {
       next: faker.internet.url(),
     });
 
-    const nextPageButton = screen.getByText("Next Page");
+    const nextPageButton = screen.getByText(/Next Page/i);
 
     expect(nextPageButton).toBeEnabled();
+  });
+
+  it("should enable previous page button when there is previous page", () => {
+    renderPagination(
+      { ...propsMock, hasPreviousPage: true },
+      {
+        ...responseMock,
+        previous: faker.internet.url(),
+      },
+    );
+
+    const previousPageButton = screen.getByText(/Previous Page/i);
+
+    expect(previousPageButton).toBeEnabled();
+  });
+
+  it("should disable previous page button when there is no previous page", () => {
+    renderPagination(
+      { ...propsMock, hasPreviousPage: false },
+      {
+        ...responseMock,
+      },
+    );
+
+    const previousPageButton = screen.getByText(/Previous Page/i);
+
+    expect(previousPageButton).toBeDisabled();
+  });
+
+  it("should disable next page button when there is no next page", () => {
+    renderPagination(
+      { ...propsMock, hasNextPage: false },
+      {
+        ...responseMock,
+      },
+    );
+
+    const previousPageButton = screen.getByText(/Next Page/i);
+
+    expect(previousPageButton).toBeDisabled();
   });
 });
