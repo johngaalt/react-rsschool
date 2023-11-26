@@ -1,13 +1,11 @@
-import { wrapWithRouter } from "../test-helpers/Router";
+import React from "react";
 import SearchResultItem from "./SearchResultItem";
 import { render, screen } from "@testing-library/react";
 import { SearchResultItemProps } from "./SearchResultItem.types";
 import { faker } from "@faker-js/faker";
 
 function renderSearchResultItem(props: SearchResultItemProps) {
-  const withRouter = wrapWithRouter(<SearchResultItem {...props} />);
-
-  return render(withRouter);
+  return render(<SearchResultItem {...props} />);
 }
 
 describe("SearchResultItem", () => {
