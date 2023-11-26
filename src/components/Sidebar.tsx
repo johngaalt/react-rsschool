@@ -1,3 +1,4 @@
+import React from "react";
 import { SyntheticEvent, useRef } from "react";
 import ErrorButton from "./ErrorButton";
 import SearchBar from "./SearchBar";

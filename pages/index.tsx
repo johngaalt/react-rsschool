@@ -1,3 +1,4 @@
+import React from "react";
 import Image from "next/image";
 import { getAll, getRunningQueriesThunk } from "src/state/query";
 import { wrapper } from "src/state/store";
