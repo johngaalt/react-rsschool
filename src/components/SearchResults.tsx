@@ -29,7 +29,10 @@ export default function SearchResults(): React.ReactElement {
           searchParam={searchParam}
         />
       ))}
-      <Pagination />
+      <Pagination
+        hasNextPage={Boolean(data?.next)}
+        hasPreviousPage={Boolean(data?.previous)}
+      />
     </div>
   );
 }

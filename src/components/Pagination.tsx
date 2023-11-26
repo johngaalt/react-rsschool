@@ -3,17 +3,23 @@ import { useAppSelector } from "../state/hooks";
 import { selectCurrentPage, selectLimit } from "../state/SidebarSlice";
 import { useLazyGetAllQuery } from "../state/query";
 import { selectSearchTerm } from "../state/SearchTermSlice";
+import { PaginationProps } from "./Pagination.types";
 
-export default function Pagination() {
+export default function Pagination({
+  hasNextPage,
+  hasPreviousPage,
+}: PaginationProps) {
   const selectRef = useRef<HTMLSelectElement>(null);
   const currentPage = useAppSelector(selectCurrentPage);
   const limit = useAppSelector(selectLimit);
   const searchTerm = useAppSelector(selectSearchTerm);
   const [fetchPeople, { data }] = useLazyGetAllQuery();
-  const hasNextPage = data?.next;
-  const hasPreviousPage = data?.previous;
 
+  const hasNext = hasNextPage || data?.next;
+  const hasPrevious = hasPreviousPage || data?.previous;
   const searchParam = String(currentPage);
+  const buttonNextClass = hasNext ? "bg-white" : "bg-gray-300";
+  const buttonPreviousClass = hasPrevious ? "bg-white" : "bg-gray-300";
 
   function fetchByLimit(limit: number) {
     fetchPeople({ limit, page: currentPage, searchTerm });
@@ -35,16 +41,13 @@ export default function Pagination() {
     }
   }
 
-  const buttonNextClass = hasNextPage ? "bg-white" : "bg-gray-300";
-  const buttonPreviousClass = hasPreviousPage ? "bg-white" : "bg-gray-300";
-
   return (
     <div className="flex flex-row justify-between items-center mt-10 gap-3">
       <h2 className="text-xl font-bold" data-testid="current-page">
         Page: {searchParam}
       </h2>
       <button
-        disabled={!hasPreviousPage}
+        disabled={!hasPrevious}
         className={`flex justify-center items-center py-1 px-2 mr-3 cursor-pointer ${buttonPreviousClass} text-orange-500 rounded-md hover:text-blue-500 shadow-md hover:shadow-lg transition duration-300 ease-in-out`}
         type="button"
         onClick={fetchPreviousPage}
@@ -52,7 +55,7 @@ export default function Pagination() {
         Previous Page
       </button>
       <button
-        disabled={!hasNextPage}
+        disabled={!hasNext}
         className={`flex justify-center items-center py-1 px-2 cursor-pointer ${buttonNextClass} text-orange-500 rounded-md hover:text-blue-500 shadow-md hover:shadow-lg transition duration-300 ease-in-out`}
         type="button"
         onClick={fetchNextPage}
