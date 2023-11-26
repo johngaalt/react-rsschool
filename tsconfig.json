@@ -27,10 +27,6 @@
     }
   },
   "include": ["src", "./jest/jest-setup.ts", "pages"],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ],
+  "references": [],
   "exclude": ["node_modules"]
 }
