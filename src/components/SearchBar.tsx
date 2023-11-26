@@ -1,14 +1,18 @@
-import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useRef } from "react";
 import { saveTerm, selectSearchTerm } from "../state/SearchTermSlice";
-import { useAppSelector } from "../state/hooks";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { useLazyGetAllQuery } from "../state/query";
 
 export default function SearchBar(): React.JSX.Element {
   const [fetchPeople] = useLazyGetAllQuery();
   const searchTerm = useAppSelector(selectSearchTerm);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const savedSearchTerm = localStorage.getItem("searchTerm") || "";
+    dispatch(saveTerm(savedSearchTerm));
+  }, [dispatch]);
 
   const handleSearch = () => {
     if (inputRef.current) {

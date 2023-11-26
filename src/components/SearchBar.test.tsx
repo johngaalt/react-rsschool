@@ -1,15 +1,15 @@
+import React from "react";
 import SearchBar from "./SearchBar";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { faker } from "@faker-js/faker";
-import { MemoryRouter } from "react-router-dom";
 import { wrapWithStore } from "../test-helpers/store";
 
 function renderSearchBar() {
   const withStore = wrapWithStore(<SearchBar />);
-  return render(<MemoryRouter>{withStore}</MemoryRouter>);
+  return render(withStore);
 }
 
-describe.skip("SearchBar", () => {
+describe("SearchBar", () => {
   it("should save entered value to the local storage", () => {
     const spy = jest.spyOn(Storage.prototype, "setItem");
     renderSearchBar();

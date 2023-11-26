@@ -1,23 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Details } from "../state/queryApi.types";
 import SearchResultItem from "./SearchResultItem";
 import Pagination from "./Pagination";
 import { useGetAllQuery } from "../state/query";
-import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { useAppSelector } from "../state/hooks";
 import { selectCurrentPage, selectLimit } from "../state/SidebarSlice";
-import { saveTerm, selectSearchTerm } from "../state/SearchTermSlice";
+import { selectSearchTerm } from "../state/SearchTermSlice";
 
 export default function SearchResults(): React.ReactElement {
   const currentPage = useAppSelector(selectCurrentPage);
   const searchTerm = useAppSelector(selectSearchTerm);
   const limit = useAppSelector(selectLimit);
   const { data } = useGetAllQuery({ searchTerm, limit, page: currentPage });
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const savedSearchTerm = localStorage.getItem("searchTerm") || "";
-    dispatch(saveTerm(savedSearchTerm));
-  }, [dispatch]);
 
   const searchParam = String(currentPage);
   const people = data?.results || [];
