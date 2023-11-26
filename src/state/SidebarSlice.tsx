@@ -14,10 +14,13 @@ export const sidebarSlice = createSlice({
     setLimit(state, action) {
       state.limit = action.payload;
     },
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
   },
 });
 
-export const { setLimit } = sidebarSlice.actions;
+export const { setLimit, setCurrentPage } = sidebarSlice.actions;
 
 export const selectCurrentPage = (state: RootState) =>
   state.sidebar.currentPage;

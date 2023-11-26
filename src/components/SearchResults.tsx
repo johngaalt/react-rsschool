@@ -11,6 +11,8 @@ export default function SearchResults(): React.ReactElement {
   const currentPage = useAppSelector(selectCurrentPage);
   const searchTerm = useAppSelector(selectSearchTerm);
   const limit = useAppSelector(selectLimit);
+
+  console.log(currentPage);
   const { data } = useGetAllQuery({ searchTerm, limit, page: currentPage });
 
   const searchParam = String(currentPage);

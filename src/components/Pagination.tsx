@@ -1,8 +1,11 @@
 import React, { useRef } from "react";
-import { useAppSelector } from "../state/hooks";
-import { selectCurrentPage, selectLimit } from "../state/SidebarSlice";
-import { useLazyGetAllQuery } from "../state/query";
-import { selectSearchTerm } from "../state/SearchTermSlice";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import {
+  selectCurrentPage,
+  selectLimit,
+  setCurrentPage,
+  setLimit,
+} from "../state/SidebarSlice";
 import { PaginationProps } from "./Pagination.types";
 
 export default function Pagination({
@@ -12,25 +15,22 @@ export default function Pagination({
   const selectRef = useRef<HTMLSelectElement>(null);
   const currentPage = useAppSelector(selectCurrentPage);
   const limit = useAppSelector(selectLimit);
-  const searchTerm = useAppSelector(selectSearchTerm);
-  const [fetchPeople, { data }] = useLazyGetAllQuery();
+  const dispatch = useAppDispatch();
 
-  const hasNext = hasNextPage || data?.next;
-  const hasPrevious = hasPreviousPage || data?.previous;
   const searchParam = String(currentPage);
-  const buttonNextClass = hasNext ? "bg-white" : "bg-gray-300";
-  const buttonPreviousClass = hasPrevious ? "bg-white" : "bg-gray-300";
+  const buttonNextClass = hasNextPage ? "bg-white" : "bg-gray-300";
+  const buttonPreviousClass = hasPreviousPage ? "bg-white" : "bg-gray-300";
 
   function fetchByLimit(limit: number) {
-    fetchPeople({ limit, page: currentPage, searchTerm });
+    dispatch(setLimit(limit));
   }
 
   function fetchPreviousPage() {
-    fetchPeople({ page: currentPage - 1 });
+    dispatch(setCurrentPage(currentPage - 1));
   }
 
   function fetchNextPage() {
-    fetchPeople({ page: currentPage + 1 });
+    dispatch(setCurrentPage(currentPage + 1));
   }
 
   function changeLimit() {
@@ -47,7 +47,7 @@ export default function Pagination({
         Page: {searchParam}
       </h2>
       <button
-        disabled={!hasPrevious}
+        disabled={!hasPreviousPage}
         className={`flex justify-center items-center py-1 px-2 mr-3 cursor-pointer ${buttonPreviousClass} text-orange-500 rounded-md hover:text-blue-500 shadow-md hover:shadow-lg transition duration-300 ease-in-out`}
         type="button"
         onClick={fetchPreviousPage}
@@ -55,7 +55,7 @@ export default function Pagination({
         Previous Page
       </button>
       <button
-        disabled={!hasNext}
+        disabled={!hasNextPage}
         className={`flex justify-center items-center py-1 px-2 cursor-pointer ${buttonNextClass} text-orange-500 rounded-md hover:text-blue-500 shadow-md hover:shadow-lg transition duration-300 ease-in-out`}
         type="button"
         onClick={fetchNextPage}
