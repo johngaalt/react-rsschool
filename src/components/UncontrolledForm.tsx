@@ -2,44 +2,83 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { setFormData } from '../state/uncontrolledFormSlice';
 import CountryAutocomplete from './CountryAutocomplete';
+import { IFormData } from './UncontrolledForm.types';
 
 export default function UncontrolledForm() {
   const dispatch = useDispatch();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const ageRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const confirmRef = useRef<HTMLInputElement>(null);
+  const genderMaleRef = useRef<HTMLInputElement>(null);
+  const genderFemaleRef = useRef<HTMLInputElement>(null);
+  const termsRef = useRef<HTMLInputElement>(null);
+  const pictureRef = useRef<HTMLInputElement>(null);
+  const countryRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (inputRef.current) {
-      dispatch(setFormData(inputRef.current.value));
-    }
+
+    const formData: IFormData = {
+      name: nameRef.current?.value || '',
+      age: parseInt(ageRef.current?.value || '0', 10),
+      email: emailRef.current?.value || '',
+      password: passwordRef.current?.value || '',
+      confirmPassword: confirmRef.current?.value || '',
+      gender: genderMaleRef.current?.checked
+        ? 'male'
+        : genderFemaleRef.current?.checked
+          ? 'female'
+          : '',
+      terms: termsRef.current?.checked || false,
+      picture: await toBase64(
+        pictureRef.current?.files?.[0] || new File([], '')
+      ),
+      country: countryRef.current?.value || '',
+    };
+
+    dispatch(setFormData(JSON.stringify(formData)));
   };
+
+  const toBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <form onSubmit={handleSubmit} className="flex">
+      <form
+        onSubmit={handleSubmit}
+        className="flex justify-between flex-col gap-2"
+      >
         <label htmlFor="name">
           <input
             id="name"
             name="name"
             type="text"
-            ref={inputRef}
+            ref={nameRef}
             className="block w-full px-4 py-2 bg-gray-500 text-white border border-white rounded-md shadow-sm placeholder-white focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
-            placeholder="Enter text"
+            placeholder="Enter name"
           />
         </label>
         <label htmlFor="age">
           <input
             type="number"
-            ref={inputRef}
+            ref={ageRef}
             id="age"
             name="age"
+            placeholder="Enter age"
             className="block w-full px-4 py-2 bg-gray-500 text-white border border-white rounded-md shadow-sm placeholder-white focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
           />
         </label>
         <label htmlFor="email">
           <input
             type="email"
-            ref={inputRef}
+            ref={emailRef}
             id="email"
             name="email"
             placeholder="Enter email"
@@ -49,7 +88,7 @@ export default function UncontrolledForm() {
         <label htmlFor="password">
           <input
             type="password"
-            ref={inputRef}
+            ref={passwordRef}
             id="password"
             name="password"
             placeholder="Enter password"
@@ -59,7 +98,7 @@ export default function UncontrolledForm() {
         <label htmlFor="confirm">
           <input
             type="password"
-            ref={inputRef}
+            ref={confirmRef}
             id="confirm"
             name="confirm"
             placeholder="Confirm password"
@@ -72,9 +111,10 @@ export default function UncontrolledForm() {
             name="gender"
             id="genderMale"
             value="male"
-            ref={inputRef}
+            ref={genderMaleRef}
             className=""
           />
+          <span className="ml-2 text-white">Male</span>
         </label>
         <label htmlFor="genderFemale">
           <input
@@ -82,32 +122,36 @@ export default function UncontrolledForm() {
             name="gender"
             id="genderFemale"
             value="female"
-            ref={inputRef}
+            ref={genderFemaleRef}
             className=""
           />
+          <span className="ml-2 text-white">Female</span>
         </label>
         <label htmlFor="terms">
           <input
             type="checkbox"
             id="terms"
             name="terms"
-            ref={inputRef}
+            ref={termsRef}
             className="mr-2"
           />
+          <span className="text-white">
+            I agree to the terms and conditions
+          </span>
         </label>
         <label htmlFor="picture">
           <input
             type="file"
             name="picture"
             id="picture"
-            ref={inputRef}
+            ref={pictureRef}
             className="block w-full px-4 py-2 bg-gray-500 text-white border border-white rounded-md shadow-sm placeholder-white focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
           />
         </label>
-        <CountryAutocomplete />
+        <CountryAutocomplete countryRef={countryRef} />
         <button
           type="submit"
-          className="px-4 py-2 bg-gray-500 text-white font-semibold rounded-md hover:bg-gray-600 focus:outline-none focus:border-gray-700 focus:ring-2 focus:ring-gray-400"
+          className="px-4 py-2 bg-gray-500 text-white font-semibold rounded-md border-white hover:bg-gray-600 focus:outline-none focus:border-gray-700 focus:ring-2 focus:ring-gray-400"
         >
           Submit
         </button>
