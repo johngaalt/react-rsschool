@@ -1,4 +1,6 @@
 import * as yup from 'yup';
+const emailPattern =
+  /^[a-zA-Z0-9._%+-]{1}(?:[a-zA-Z0-9._%+-]*[^.])?@gmail\.com$/;
 
 export const schema = yup
   .object({
@@ -13,7 +15,10 @@ export const schema = yup
       .required('Age is required'),
     email: yup
       .string()
-      .email('Must be a valid email')
+      .matches(
+        emailPattern,
+        'Email must be a valid Gmail address and end with @gmail.com'
+      )
       .required('Email is required'),
     password: yup
       .string()
@@ -37,14 +42,14 @@ export const schema = yup
           const file = value[0];
           return file.size <= 1024 * 1024;
         }
-        return false; // or return a Yup validation error
+        return false;
       })
       .test('fileType', 'Unsupported file format', (value: unknown) => {
         if (value instanceof FileList && value.length > 0) {
           const file = value[0];
           return ['image/jpeg', 'image/png'].includes(file.type);
         }
-        return false; // or return a Yup validation error
+        return false;
       }),
 
     country: yup.string().required('Country is required'),

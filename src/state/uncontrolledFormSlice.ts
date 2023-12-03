@@ -1,11 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UncontrolledFormState {
-  data: string;
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: string;
+  terms: boolean;
+  picture: string;
+  country: string;
 }
 
 const initialState: UncontrolledFormState = {
-  data: '',
+  name: '',
+  age: 0,
+  email: '',
+  password: '',
+  confirmPassword: '',
+  gender: '',
+  terms: false,
+  picture: '',
+  country: '',
 };
 
 export const uncontrolledFormSlice = createSlice({
@@ -13,7 +29,15 @@ export const uncontrolledFormSlice = createSlice({
   initialState,
   reducers: {
     setFormData: (state, action: PayloadAction<string>) => {
-      state.data = action.payload;
+      state.name = action.payload;
+      state.age = parseInt(action.payload, 10);
+      state.email = action.payload;
+      state.password = action.payload;
+      state.confirmPassword = action.payload;
+      state.gender = action.payload;
+      state.terms = action.payload === 'true';
+      state.picture = action.payload;
+      state.country = action.payload;
     },
   },
 });

@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 interface CountryAutocompleteProps {
-  countryRef: React.RefObject<HTMLInputElement>;
+  countryRef?: React.RefObject<HTMLInputElement>;
 }
 
 const countries = [

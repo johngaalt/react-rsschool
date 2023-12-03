@@ -2,10 +2,13 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { setFormData } from '../state/uncontrolledFormSlice';
 import CountryAutocomplete from './CountryAutocomplete';
-import { IFormData } from './UncontrolledForm.types';
+import { schema } from '../utils/validator';
+import { useNavigate } from 'react-router-dom';
 
 export default function UncontrolledForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -20,7 +23,7 @@ export default function UncontrolledForm() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const formData: IFormData = {
+    const formData = {
       name: nameRef.current?.value || '',
       age: parseInt(ageRef.current?.value || '0', 10),
       email: emailRef.current?.value || '',
@@ -38,7 +41,19 @@ export default function UncontrolledForm() {
       country: countryRef.current?.value || '',
     };
 
-    dispatch(setFormData(JSON.stringify(formData)));
+    try {
+      // Convert form data to the appropriate structure for Yup validation
+      const validFormData = await schema.validate(formData, {
+        abortEarly: false, // Return all errors found
+      });
+
+      // If validation is successful
+      dispatch(setFormData(JSON.stringify(validFormData)));
+
+      navigate('/');
+    } catch (validationErrors) {
+      console.error(validationErrors);
+    }
   };
 
   const toBase64 = (file: File): Promise<string> =>
