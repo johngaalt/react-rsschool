@@ -1,7 +1,9 @@
 import { useRef } from 'react';
+import ValidationMessage from './ValidationMessage';
 
 interface CountryAutocompleteProps {
   countryRef?: React.RefObject<HTMLInputElement>;
+  validationMessage?: string;
 }
 
 const countries = [
@@ -15,32 +17,27 @@ const countries = [
   'Canada',
 ];
 
-const CountryAutocomplete: React.FC<CountryAutocompleteProps> = () => {
+const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
+  validationMessage,
+}) => {
   const countryRef = useRef<HTMLInputElement>(null);
-
-  const getFilteredCountries = () => {
-    if (!countryRef.current) return [];
-    const userInput = countryRef.current.value;
-    return countries.filter((country) =>
-      country.toLowerCase().includes(userInput.toLowerCase())
-    );
-  };
 
   return (
     <>
       <input
-        className="block w-full px-4 py-2 bg-gray-500 text-white border border-white rounded-md shadow-sm placeholder-white focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
         ref={countryRef}
+        className="block w-full px-4 py-2 bg-gray-500 text-white border border-white rounded-md shadow-sm placeholder-white focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
         type="text"
         list="country-list"
         autoComplete="off"
         placeholder="Country"
       />
       <datalist id="country-list">
-        {getFilteredCountries().map((country, index) => (
+        {countries.map((country, index) => (
           <option key={index} value={country} />
         ))}
       </datalist>
+      <ValidationMessage message={validationMessage} />
     </>
   );
 };

@@ -55,3 +55,5 @@ export const schema = yup
     country: yup.string().required('Country is required'),
   })
   .required();
+
+export type ValidationSchemaKeys = keyof yup.InferType<typeof schema>;
