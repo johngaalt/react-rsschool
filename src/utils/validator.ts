@@ -37,21 +37,24 @@ export const schema = yup
     picture: yup
       .mixed()
       .required('Picture is required')
-      .test('fileSize', 'The file is too large', (value: unknown) => {
-        if (value instanceof FileList && value.length > 0) {
-          const file = value[0];
-          return file.size <= 1024 * 1024;
-        }
-        return false;
-      })
       .test('fileType', 'Unsupported file format', (value: unknown) => {
         if (value instanceof FileList && value.length > 0) {
           const file = value[0];
-          return ['image/jpeg', 'image/png'].includes(file.type);
+          return ['image/jpeg', 'image/jpg', 'image/png'].includes(file.type);
         }
         return false;
-      }),
-
+      })
+      .test(
+        'fileSize',
+        'The file should be less then 200KB',
+        (value: unknown) => {
+          if (value instanceof FileList && value.length > 0) {
+            const file = value[0];
+            return file.size <= 200 * 1024;
+          }
+          return false;
+        }
+      ),
     country: yup.string().required('Country is required'),
   })
   .required();

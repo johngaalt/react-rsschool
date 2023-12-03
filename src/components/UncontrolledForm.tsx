@@ -14,7 +14,6 @@ const parseValidationErrors = (
 
   if (validationErrors.inner) {
     validationErrors.inner.forEach((error) => {
-      console.log(error.path);
       if (error.path && !errors[error.path]) {
         errors[error.path] = error.message;
       }
@@ -58,9 +57,7 @@ export default function UncontrolledForm() {
           ? 'female'
           : '',
       terms: termsRef.current?.checked || false,
-      picture: await toBase64(
-        pictureRef.current?.files?.[0] || new File([], '')
-      ),
+      picture: pictureRef.current?.files,
       country: countryRef.current?.value || '',
     };
 
@@ -77,14 +74,6 @@ export default function UncontrolledForm() {
       setValidationErrors(parseValidationErrors(validationErrors));
     }
   };
-
-  const toBase64 = (file: File): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -191,6 +180,7 @@ export default function UncontrolledForm() {
             name="picture"
             id="picture"
             ref={pictureRef}
+            accept="image/jpeg, image/png"
             className="block w-full px-4 py-2 bg-gray-500 text-white border border-white rounded-md shadow-sm placeholder-white focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
           />
         </label>
