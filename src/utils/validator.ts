@@ -59,4 +59,4 @@ export const schema = yup
   })
   .required();
 
-export type ValidationSchemaKeys = keyof yup.InferType<typeof schema>;
+export type ValidationSchemaKeys = yup.InferType<typeof schema>;
