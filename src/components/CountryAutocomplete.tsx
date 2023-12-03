@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import ValidationMessage from './ValidationMessage';
 
 interface CountryAutocompleteProps {
@@ -19,9 +18,8 @@ const countries = [
 
 const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
   validationMessage,
+  countryRef,
 }) => {
-  const countryRef = useRef<HTMLInputElement>(null);
-
   return (
     <>
       <input

@@ -1,11 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setFormData } from '../state/uncontrolledFormSlice';
+import {
+  UncontrolledFormState,
+  setFormData,
+} from '../state/uncontrolledFormSlice';
 import CountryAutocomplete from './CountryAutocomplete';
 import { schema } from '../utils/validator';
 import { useNavigate } from 'react-router-dom';
 import { ValidationError } from 'yup';
 import ValidationMessage from './ValidationMessage';
+import toBase64 from '../utils/toBase64';
 
 const parseValidationErrors = (
   validationErrors: ValidationError
@@ -66,7 +70,19 @@ export default function UncontrolledForm() {
         abortEarly: false,
       });
 
-      dispatch(setFormData(JSON.stringify(validFormData)));
+      const payload: UncontrolledFormState = {
+        name: validFormData.name,
+        age: validFormData.age,
+        email: validFormData.email,
+        password: validFormData.password,
+        confirmPassword: validFormData.confirmPassword,
+        gender: validFormData.gender,
+        terms: validFormData.terms,
+        picture: await toBase64(validFormData.picture),
+        country: validFormData.country,
+      };
+
+      dispatch(setFormData(payload));
 
       navigate('/');
     } catch (error) {
@@ -131,11 +147,12 @@ export default function UncontrolledForm() {
             type="password"
             ref={confirmRef}
             id="confirm"
-            name="confirm"
+            name="confirmPassword"
             placeholder="Confirm password"
             className="block w-full px-4 py-2 bg-gray-500 text-white border border-white rounded-md shadow-sm placeholder-white focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
           />
         </label>
+        <ValidationMessage message={validationErrors.confirmPassword} />
         <div className="flex">
           <label htmlFor="genderMale">
             <input

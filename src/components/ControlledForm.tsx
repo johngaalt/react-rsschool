@@ -1,14 +1,8 @@
-import { useDispatch } from 'react-redux';
-import { setFormData } from '../state/uncontrolledFormSlice';
-
 export default function ControlledForm() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = {};
-
-    dispatch(setFormData(JSON.stringify(formData)));
   };
 
   return (

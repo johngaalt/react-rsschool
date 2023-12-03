@@ -7,7 +7,7 @@ export const schema = yup
     name: yup
       .string()
       .required('Name is required')
-      .matches(/^[A-Z][a-z]+/, 'First letter must be uppercase'),
+      .matches(/^[A-Z][a-zA-Z]*$/, 'First letter must be uppercase'),
     age: yup
       .number()
       .positive('Age must be positive')

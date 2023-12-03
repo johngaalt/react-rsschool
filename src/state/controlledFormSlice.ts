@@ -1,47 +1,46 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+// Define the structure of the form's state
 interface ControlledFormState {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  gender: string;
-  terms: boolean;
-  picture: string;
-  country: string;
+  submittedData: {
+    name: string;
+    age: number;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    gender: string;
+    terms: boolean;
+    picture: string; // Base64 encoded string
+    country: string;
+  } | null; // Initially there is no submitted data
 }
 
+// This is the initial state of the form, before any data is submitted
 const initialState: ControlledFormState = {
-  name: '',
-  age: 0,
-  email: '',
-  password: '',
-  confirmPassword: '',
-  gender: '',
-  terms: false,
-  picture: '',
-  country: '',
+  submittedData: null,
 };
 
-export const controlledFormSlice = createSlice({
-  name: 'controlledForm',
+// Define the slice
+const controlledFormSlice = createSlice({
+  name: 'controlledFormData',
   initialState,
   reducers: {
-    setFormData: (state, action: PayloadAction<ControlledFormState>) => {
-      state.name = action.payload.name;
-      state.age = action.payload.age;
-      state.email = action.payload.email;
-      state.password = action.payload.password;
-      state.confirmPassword = action.payload.confirmPassword;
-      state.gender = action.payload.gender;
-      state.terms = action.payload.terms;
-      state.picture = action.payload.picture;
-      state.country = action.payload.country;
+    // Action to store the submitted data
+    submitFormData: (
+      state,
+      action: PayloadAction<ControlledFormState['submittedData']>
+    ) => {
+      state.submittedData = action.payload;
+    },
+    // Action to clear the submitted data
+    clearFormData: (state) => {
+      state.submittedData = null;
     },
   },
 });
 
-export const { setFormData } = controlledFormSlice.actions;
+// Export the actions
+export const { submitFormData, clearFormData } = controlledFormSlice.actions;
 
+// Export the reducer
 export default controlledFormSlice.reducer;
