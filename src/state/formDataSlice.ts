@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from './store';
 
 export interface FormState {
   name: string;
@@ -58,5 +59,7 @@ export const formSlice = createSlice({
 });
 
 export const { setFormData } = formSlice.actions;
+
+export const selectFormData = (state: RootState) => state.formData;
 
 export default formSlice.reducer;
