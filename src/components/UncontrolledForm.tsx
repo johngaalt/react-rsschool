@@ -1,15 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  UncontrolledFormState,
-  setFormData,
-} from '../state/uncontrolledFormSlice';
 import CountryAutocomplete from './CountryAutocomplete';
 import { schema } from '../utils/validator';
 import { useNavigate } from 'react-router-dom';
 import { ValidationError } from 'yup';
 import ValidationMessage from './ValidationMessage';
 import toBase64 from '../utils/toBase64';
+import { FormState, setFormData } from '../state/formDataSlice';
 
 const parseValidationErrors = (
   validationErrors: ValidationError
@@ -70,7 +67,7 @@ export default function UncontrolledForm() {
         abortEarly: false,
       });
 
-      const payload: UncontrolledFormState = {
+      const payload: FormState = {
         name: validFormData.name,
         age: validFormData.age,
         email: validFormData.email,

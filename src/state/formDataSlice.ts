@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface UncontrolledFormState {
+export interface FormState {
   name: string;
   age: number;
   email: string;
@@ -12,7 +12,7 @@ export interface UncontrolledFormState {
   country: string;
 }
 
-const initialState: UncontrolledFormState = {
+const initialState: FormState = {
   name: '',
   age: 0,
   email: '',
@@ -24,8 +24,8 @@ const initialState: UncontrolledFormState = {
   country: '',
 };
 
-export const uncontrolledFormSlice = createSlice({
-  name: 'uncontrolledFormData',
+export const formSlice = createSlice({
+  name: 'formData',
   initialState,
   reducers: {
     setFormData: (
@@ -42,7 +42,7 @@ export const uncontrolledFormSlice = createSlice({
           picture,
           country,
         },
-      }: PayloadAction<UncontrolledFormState>
+      }: PayloadAction<FormState>
     ) => {
       state.name = name;
       state.age = age;
@@ -57,6 +57,6 @@ export const uncontrolledFormSlice = createSlice({
   },
 });
 
-export const { setFormData } = uncontrolledFormSlice.actions;
+export const { setFormData } = formSlice.actions;
 
-export default uncontrolledFormSlice.reducer;
+export default formSlice.reducer;
