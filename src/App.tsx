@@ -6,7 +6,7 @@ import MainPage from './components/MainPage';
 
 function App() {
   return (
-    <Router basename="/react-rsschool/forms">
+    <Router basename="/forms">
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/uncontrolled-form" element={<UncontrolledForm />} />
