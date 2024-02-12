@@ -11,7 +11,7 @@
     "prepare": "husky install",
     "format": "prettier --write .",
     "test": "echo \"No tests specified\"",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist -e forms"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": "eslint --cache --fix",
